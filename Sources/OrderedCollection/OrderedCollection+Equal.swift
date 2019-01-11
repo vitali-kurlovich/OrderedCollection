@@ -10,7 +10,7 @@ import Foundation
 internal
 extension OrderedCollection {
     func leftRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incConditional() 
+        incConditional()
         if isAscending {
             return leftAscRange(equal: value, range: range)
         }
@@ -28,12 +28,21 @@ extension OrderedCollection {
 
 private
 extension OrderedCollection {
-    func leftAscRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incCalls()
-
+    func leftLineadAscRange(equal _: Self.Element, range: Range<Int>) -> Int? {
         let leftIndex = range.lowerBound
         let rightIndex = range.upperBound
 
+        let left = self[leftIndex]
+        let right = self[rightIndex]
+
+        return nil
+    }
+
+    func leftAscRange(equal value: Self.Element, range: Range<Int>) -> Int? {
+        let leftIndex = range.lowerBound
+        let rightIndex = range.upperBound
+
+        // 1 2 3 4 5 6 7 8
         let left = self[leftIndex]
 
         incConditional()
@@ -42,11 +51,16 @@ extension OrderedCollection {
         }
 
         incConditional()
-        guard left < value else {
+        let right = self[rightIndex]
+
+        guard right >= value, left < value else {
             return nil
         }
 
-        let right = self[rightIndex]
+        incConditional()
+        if rightIndex - leftIndex < 50 {
+            //  return leftLineadAscRange(equal:value, range:range)
+        }
 
         incConditional()
         if right == value, rightIndex - leftIndex <= 1 {
@@ -73,8 +87,6 @@ extension OrderedCollection {
     }
 
     func rightAscRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incCalls()
-
         let leftIndex = range.lowerBound
         let rightIndex = range.upperBound
 
@@ -103,7 +115,6 @@ extension OrderedCollection {
         }
 
         let midIndex = (leftIndex + rightIndex) / 2
-
         let mid = self[midIndex]
 
         incConditional()
@@ -117,8 +128,6 @@ extension OrderedCollection {
     }
 
     func leftDescRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incCalls()
-
         let leftIndex = range.lowerBound
         let rightIndex = range.upperBound
 
@@ -161,8 +170,6 @@ extension OrderedCollection {
     }
 
     func rightDescRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incCalls()
-
         let leftIndex = range.lowerBound
         let rightIndex = range.upperBound
 

@@ -1,6 +1,8 @@
 import class Foundation.Bundle
 import XCTest
 
+import OrderedCollection
+
 final class OrderedCollectionTests: XCTestCase {
     func testAllocationOrderedArray() {
         XCTAssertThrowsError(
@@ -11,7 +13,8 @@ final class OrderedCollectionTests: XCTestCase {
             try DescArray([5, 4, 3, 2, 1, 0, 2, 3, 4])
         )
 
-        XCTAssertNoThrow(try AscArray([Int]()))
+        let emptyArray: [Int] = []
+        XCTAssertNoThrow(try AscArray(emptyArray))
         XCTAssertNoThrow(try AscArray([1]))
         XCTAssertNoThrow(try AscArray([1, 2]))
         XCTAssertNoThrow(try AscArray([1, 1]))
@@ -44,33 +47,6 @@ final class OrderedCollectionTests: XCTestCase {
 
         XCTAssertNotNil(range)
         XCTAssertEqual(range!, test.range(equal: 3))
-    }
-
-    func testLeftRightAscRange() {
-        let array = try! AscArray([0, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 6, 7, 8, 8, 8, 8, 9, 9, 10, 11, 11, 11, 12, 12, 12, 12])
-
-        let range = Range(uncheckedBounds: (lower: 0, upper: array.count - 1))
-        let rl2 = array.leftRange(equal: 2, range: range)
-        let rr2 = array.rightRange(equal: 2, range: range)
-
-        XCTAssertNotNil(rl2)
-        XCTAssertNotNil(rr2)
-
-        XCTAssertEqual(rl2!, 2)
-        XCTAssertEqual(rr2!, 4)
-    }
-
-    func testLeftRightDescRange() {
-        let array = try! DescArray([8, 7, 7, 7, 6, 6, 5, 4, 3, 3, 3, 2, 1, 0])
-        let range = Range(uncheckedBounds: (lower: 0, upper: array.count - 1))
-
-        let rl3 = array.leftRange(equal: 3, range: range)
-        XCTAssertNotNil(rl3)
-        XCTAssertEqual(rl3!, 8)
-
-        let rr3 = array.rightRange(equal: 3, range: range)
-        XCTAssertNotNil(rr3)
-        XCTAssertEqual(rr3!, 10)
     }
 
     func testRangeEqual() {

@@ -23,16 +23,20 @@ protocol OrderedCollection: Collection where Self.Element: Comparable {
 public
 extension OrderedCollection {
     func range(equal value: Self.Element, range: Range<Int>? = nil) -> Range<Int>? {
+        incConditional()
         guard count > 0 else { return nil }
 
+        incConditional()
         var range = range != nil ? range! : Range(uncheckedBounds: (lower: 0, upper: count - 1))
 
+        incConditional()
         guard let leftIndex = leftRange(equal: value, range: range) else {
             return nil
         }
 
         range = Range(uncheckedBounds: (lower: leftIndex, upper: range.upperBound))
 
+        incConditional()
         guard let rightIndex = rightRange(equal: value, range: range) else {
             return nil
         }
@@ -41,17 +45,22 @@ extension OrderedCollection {
     }
 
     func range(less: Self.Element, range: Range<Int>? = nil) -> Range<Int>? {
+        incConditional()
         guard count > 0 else { return nil }
 
+        incConditional()
         let range = range != nil ? range! : Range(uncheckedBounds: (lower: 0, upper: count - 1))
 
+        incConditional()
         if range.lowerBound == range.upperBound {
+            incConditional()
             if self[0] < less {
                 return range
             }
             return nil
         }
 
+        incConditional()
         if isAscending {
             return ascRange(less: less, range: range)
         }
@@ -59,17 +68,22 @@ extension OrderedCollection {
     }
 
     func range(large: Self.Element, range: Range<Int>? = nil) -> Range<Int>? {
+        incConditional()
         guard count > 0 else { return nil }
 
+        incConditional()
         let range = range != nil ? range! : Range(uncheckedBounds: (lower: 0, upper: count - 1))
 
+        incConditional()
         if range.lowerBound == range.upperBound {
+            incConditional()
             if self[0] > large {
                 return range
             }
             return nil
         }
 
+        incConditional()
         if isAscending {
             return ascRange(large: large, range: range)
         }

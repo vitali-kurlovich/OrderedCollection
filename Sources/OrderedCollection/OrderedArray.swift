@@ -12,6 +12,7 @@ struct AscArray<ElementType: Comparable> {
     private
     let buffer: [ElementType]
 
+    public
     init(_ buffer: [ElementType]) throws {
         if buffer.count >= 2 {
             var last = buffer.first!
@@ -33,6 +34,7 @@ struct DescArray<ElementType: Comparable> {
     private
     let buffer: [ElementType]
 
+    public
     init(_ buffer: [ElementType]) throws {
         if buffer.count >= 2 {
             var last = buffer.first!
