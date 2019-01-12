@@ -46,7 +46,7 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
 
         var test = [Int]()
 
-        for i in 0 ..< 50 {
+        for i in 0 ..< 32 {
             test.append(i)
         }
 
@@ -87,16 +87,41 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
         }
 
         printStatistic()
+/*
+        test.reserveCapacity(512*4)
+        test.removeAll()
+        test.append(Int.random(in: 0..<5))
+        test.append(test.last!)
+        
+        for _ in 0..<40000 {
+            let rnd = Int.random(in: 0..<3)
+            let last = test.last! + Int.random(in: 1..<6)
+            for _ in 0...rnd {
+               test.append(last)
+            }
+        }
+        
+      
+        let ascArray = try! AscArray(test)
+        
+        var empty = [Int]()
+        for index in 1...100 {
+        let last = test.last! + index
+            let first = test.first! - index
+           empty.append(last)
+            empty.append(first)
+        }
+        
+        let values = Set(test).union(empty)
+        
+        print(ascArray.count)
+        print(values.count)
         /*
-         measure {
-         for val in 0..<acsA.count {
-         _ = acsA.range(equal: val)
-         }
-
-         for val in 0..<acsB.count {
-         _ = acsB.range(equal: val)
-         }
-         }
-         */
+        measure {
+            for val in values {
+                _ = ascArray.range(equal: val)
+            }
+        }*/
+ */
     }
 }

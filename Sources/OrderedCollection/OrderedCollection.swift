@@ -36,6 +36,11 @@ extension OrderedCollection {
 
         range = Range(uncheckedBounds: (lower: leftIndex, upper: range.upperBound))
 
+//        incConditional()
+//        if range.upperBound - range.lowerBound < 16 {
+//            return linearAscRange(equal: value, range: range)
+//        }
+
         incConditional()
         guard let rightIndex = rightRange(equal: value, range: range) else {
             return nil

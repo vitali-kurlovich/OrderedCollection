@@ -325,18 +325,10 @@ final class OrderedCollectionTests: XCTestCase {
                     asc = try! AscArray(test)
                     desc = try! DescArray(test.reversed())
 
-                    if asc.range(large: v) != test.range(large: v) {
-                        print("value:\(v)")
-                        print(test)
+                    for val in 0 ..< test.count {
+                        XCTAssertEqual(asc.range(large: val), test.range(large: val))
+                        XCTAssertEqual(desc.range(large: val), test.reversed().range(large: val))
                     }
-
-                    if desc.range(large: v) != test.reversed().range(large: v) {
-                        print("value:\(v)")
-                        print(test.reversed())
-                    }
-
-                    XCTAssertEqual(asc.range(large: v), test.range(large: v))
-                    XCTAssertEqual(desc.range(large: v), test.reversed().range(large: v))
                 }
             }
         }
