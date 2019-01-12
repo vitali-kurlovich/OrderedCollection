@@ -11,8 +11,6 @@ import OrderedCollection
 
 final class OrderedCollectionPerformanceTests: XCTestCase {
     func testCondCount() {
-        
-
         var test = [Int]()
 
         test.reserveCapacity(512 * 4)

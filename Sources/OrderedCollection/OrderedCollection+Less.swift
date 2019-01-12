@@ -16,29 +16,24 @@ extension OrderedCollection {
         let left = self[leftIndex]
         let right = self[rightIndex]
 
-        
         if right < less {
             return range
         }
 
-        // 1 2 3 4 5 6 7 8
-        
         if left >= less {
             return nil
         }
 
-        
         guard rightIndex - leftIndex >= 2 else {
             return Range(uncheckedBounds: (lower: leftIndex, upper: leftIndex))
         }
 
         let midIndex = (leftIndex + rightIndex) / 2
         let mid = self[midIndex]
-        // 1 2 3 4 5 6 7 8
-        
+
         if mid < less {
             let findRange = Range(uncheckedBounds: (lower: midIndex + 1, upper: rightIndex))
-            
+
             guard let subrange = ascRange(less: less, range: findRange) else {
                 return Range(uncheckedBounds: (lower: leftIndex, upper: midIndex))
             }
@@ -47,7 +42,7 @@ extension OrderedCollection {
         }
 
         let findRange = Range(uncheckedBounds: (lower: leftIndex, upper: midIndex - 1))
-        
+
         guard let subrange = ascRange(less: less, range: findRange) else {
             return Range(uncheckedBounds: (lower: leftIndex, upper: leftIndex))
         }
@@ -65,17 +60,14 @@ extension OrderedCollection {
         let left = self[leftIndex]
         let right = self[rightIndex]
 
-        
         if left < less {
             return range
         }
 
-        
         if right >= less {
             return nil
         }
 
-        
         guard rightIndex - leftIndex >= 2 else {
             return Range(uncheckedBounds: (lower: rightIndex, upper: rightIndex))
         }
@@ -83,12 +75,9 @@ extension OrderedCollection {
         let midIndex = (leftIndex + rightIndex) / 2
         let mid = self[midIndex]
 
-        // 8, 7, 6, 5, 4, 3, 2, 1
-
-        
         if mid >= less {
             let findRange = Range(uncheckedBounds: (lower: midIndex + 1, upper: rightIndex))
-            
+
             guard let subrange = descRange(less: less, range: findRange) else {
                 return Range(uncheckedBounds: (lower: midIndex, upper: rightIndex))
             }
@@ -97,7 +86,7 @@ extension OrderedCollection {
         }
 
         let findRange = Range(uncheckedBounds: (lower: leftIndex, upper: midIndex))
-        
+
         guard let subrange = descRange(less: less, range: findRange) else {
             return Range(uncheckedBounds: (lower: rightIndex, upper: rightIndex))
         }
