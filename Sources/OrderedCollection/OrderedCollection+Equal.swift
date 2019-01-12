@@ -10,7 +10,7 @@ import Foundation
 internal
 extension OrderedCollection {
     func leftRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incConditional()
+        
         if isAscending {
             return leftAscRange(equal: value, range: range)
         }
@@ -18,7 +18,7 @@ extension OrderedCollection {
     }
 
     func rightRange(equal value: Self.Element, range: Range<Int>) -> Int? {
-        incConditional()
+        
         if isAscending {
             return rightAscRange(equal: value, range: range)
         }
@@ -31,8 +31,8 @@ extension OrderedCollection {
 
         var l: Int?
         for index in range.lowerBound ... range.upperBound {
-            incConditional()
-            incConditional()
+            
+            
             if self[index] == value {
                 l = index
                 break
@@ -45,8 +45,8 @@ extension OrderedCollection {
 
         var rightIndex = leftIndex
         for index in leftIndex ... range.upperBound {
-            incConditional()
-            incConditional()
+            
+            
             if self[index] == value {
                 rightIndex = index
             } else {
@@ -68,22 +68,22 @@ extension OrderedCollection {
         let left = self[leftIndex]
         let right = self[rightIndex]
 
-        incConditional()
+        
         if left == value {
             return leftIndex
         }
 
-        incConditional()
+        
         guard right >= value, left < value else {
             return nil
         }
 
-        incConditional()
+        
         if right == value, rightIndex - leftIndex <= 1 {
             return rightIndex
         }
 
-        incConditional()
+        
         guard rightIndex - leftIndex >= 2 else {
             return nil
         }
@@ -92,7 +92,7 @@ extension OrderedCollection {
 
         let mid = self[midIndex]
 
-        incConditional()
+        
         if mid >= value {
             let findRange = Range(uncheckedBounds: (lower: leftIndex, upper: midIndex))
             return leftAscRange(equal: value, range: findRange)
@@ -109,23 +109,23 @@ extension OrderedCollection {
         let right = self[rightIndex]
         let left = self[leftIndex]
 
-        incConditional()
+        
         if right == value {
             return rightIndex
         }
 
         // 1 2 3 4 5 6 7 8 9
-        incConditional()
+        
         guard right > value else {
             return nil
         }
 
-        incConditional()
+        
         if left == value, rightIndex - leftIndex <= 1 {
             return leftIndex
         }
 
-        incConditional()
+        
         guard rightIndex - leftIndex >= 2 else {
             return nil
         }
@@ -133,7 +133,7 @@ extension OrderedCollection {
         let midIndex = (leftIndex + rightIndex) / 2
         let mid = self[midIndex]
 
-        incConditional()
+        
         if mid <= value {
             let findRange = Range(uncheckedBounds: (lower: midIndex, upper: rightIndex))
             return rightAscRange(equal: value, range: findRange)
@@ -150,23 +150,23 @@ extension OrderedCollection {
         let left = self[leftIndex]
         let right = self[rightIndex]
 
-        incConditional()
+        
         if left == value {
             return leftIndex
         }
         
         // 8 7 6 5 4 4 4 3 2 1
-        incConditional()
+        
         guard left > value else {
             return nil
         }
         
-        incConditional()
+        
         if right == value, rightIndex - leftIndex <= 1 {
             return rightIndex
         }
 
-        incConditional()
+        
         guard rightIndex - leftIndex >= 2 else {
             return nil
         }
@@ -175,7 +175,7 @@ extension OrderedCollection {
 
         let mid = self[midIndex]
 // 8 7 6 5 4 3 2 1
-        incConditional()
+        
         if mid > value {
             let findRange = Range(uncheckedBounds: (lower: midIndex + 1, upper: rightIndex))
             return leftDescRange(equal: value, range: findRange)
@@ -191,24 +191,24 @@ extension OrderedCollection {
 
         let right = self[rightIndex]
 
-        incConditional()
+        
         if right == value {
             return rightIndex
         }
 
-        incConditional()
+        
         guard right < value else {
             return nil
         }
 
         let left = self[leftIndex]
 
-        incConditional()
+        
         if left == value, rightIndex - leftIndex <= 1 {
             return leftIndex
         }
 
-        incConditional()
+        
         guard rightIndex - leftIndex >= 2 else {
             return nil
         }
@@ -218,7 +218,7 @@ extension OrderedCollection {
         let mid = self[midIndex]
 
         // 8 7 6 5 4 4 4 3 2 1
-        incConditional()
+        
         if mid >= value {
             let findRange = Range(uncheckedBounds: (lower: midIndex, upper: rightIndex))
             return rightDescRange(equal: value, range: findRange)
