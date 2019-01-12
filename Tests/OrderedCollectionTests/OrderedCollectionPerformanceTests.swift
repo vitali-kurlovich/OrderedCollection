@@ -41,8 +41,11 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
             testB.append(testB.count - 44)
         }
 
-        let acsA = try! AscArray(testA)
-        let acsB = try! AscArray(testB)
+        // let acsA = try! AscArray(testA)
+        // let acsB = try! AscArray(testB)
+
+        let descA = try! DescArray(testA.reversed())
+        let descB = try! DescArray(testB.reversed())
 
         var test = [Int]()
 
@@ -50,78 +53,77 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
             test.append(i)
         }
 
-        let asc = try! AscArray(test)
+        let desc = try! DescArray(test.reversed())
 
         resetStatistic()
         for val in 0 ..< test.count {
-            _ = test.range(equal: val)
+            _ = test.reversed().range(equal: val)
         }
 
         printStatistic()
 
         resetStatistic()
-        for val in 0 ..< asc.count {
-            _ = asc.range(equal: val)
+        for val in 0 ..< desc.count {
+            _ = desc.range(equal: val)
         }
 
         printStatistic()
 
         resetStatistic()
         for val in 0 ..< testA.count {
-            _ = testA.range(equal: val)
+            _ = testA.reversed().range(equal: val)
         }
 
         for val in 0 ..< testB.count {
-            _ = testB.range(equal: val)
+            _ = testB.reversed().range(equal: val)
         }
 
         printStatistic()
 
         resetStatistic()
-        for val in 0 ..< acsA.count {
-            _ = acsA.range(equal: val)
+        for val in 0 ..< descA.count {
+            _ = descA.range(equal: val)
         }
 
-        for val in 0 ..< acsB.count {
-            _ = acsB.range(equal: val)
+        for val in 0 ..< descB.count {
+            _ = descB.range(equal: val)
         }
 
         printStatistic()
-/*
-        test.reserveCapacity(512*4)
+
+        return
+            test.reserveCapacity(512 * 4)
         test.removeAll()
-        test.append(Int.random(in: 0..<5))
+        test.append(Int.random(in: 0 ..< 5))
         test.append(test.last!)
-        
-        for _ in 0..<40000 {
-            let rnd = Int.random(in: 0..<3)
-            let last = test.last! + Int.random(in: 1..<6)
-            for _ in 0...rnd {
-               test.append(last)
+
+        for _ in 0 ..< 40000 {
+            let rnd = Int.random(in: 0 ..< 3)
+            let last = test.last! + Int.random(in: 1 ..< 6)
+            for _ in 0 ... rnd {
+                test.append(last)
             }
         }
-        
-      
+
         let ascArray = try! AscArray(test)
-        
+
         var empty = [Int]()
-        for index in 1...100 {
-        let last = test.last! + index
+        for index in 1 ... 100 {
+            let last = test.last! + index
             let first = test.first! - index
-           empty.append(last)
+            empty.append(last)
             empty.append(first)
         }
-        
+
         let values = Set(test).union(empty)
-        
+
         print(ascArray.count)
         print(values.count)
-        /*
+
         measure {
             for val in values {
-                _ = ascArray.range(equal: val)
+                _ = ascArray.range(less: val)
             }
-        }*/
- */
+        }
     }
 }
