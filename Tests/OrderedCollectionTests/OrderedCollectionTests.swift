@@ -69,24 +69,24 @@ final class OrderedCollectionTests: XCTestCase {
         asc = try! AscArray(test)
         desc = try! DescArray(test)
 
-        XCTAssertEqual(asc.range(equal: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
-        XCTAssertEqual(desc.range(equal: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(asc.range(equal: 5), test.range(equal: 5))
+        XCTAssertEqual(desc.range(equal: 5), test.range(equal: 5))
 
         test = [5, 6]
         asc = try! AscArray(test)
         test = [6, 5]
         desc = try! DescArray(test)
 
-        XCTAssertEqual(asc.range(equal: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
-        XCTAssertEqual(desc.range(equal: 5), Range(uncheckedBounds: (lower: 1, upper: 1)))
+        XCTAssertEqual(asc.range(equal: 5), [5, 6].range(equal: 5))
+        XCTAssertEqual(desc.range(equal: 5), [6, 5].range(equal: 5))
 
         test = [5, 6, 7]
         asc = try! AscArray(test)
         test = [7, 6, 5]
         desc = try! DescArray(test)
 
-        XCTAssertEqual(asc.range(equal: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
-        XCTAssertEqual(desc.range(equal: 5), Range(uncheckedBounds: (lower: 2, upper: 2)))
+        XCTAssertEqual(asc.range(equal: 5), [5, 6, 7].range(equal: 5))
+        XCTAssertEqual(desc.range(equal: 5), [7, 6, 5].range(equal: 5))
 
         test = [3, 4]
         asc = try! AscArray(test)
@@ -124,18 +124,15 @@ final class OrderedCollectionTests: XCTestCase {
                     asc = try! AscArray(test)
                     desc = try! DescArray(test.reversed())
 
-                    if asc.range(equal: v) != test.range(equal: v) {
-                        print("value:\(v)")
-                        print(test)
-                    }
+                    let values = Set(test)
 
-                    if desc.range(equal: v) != test.reversed().range(equal: v) {
-                        print("value:\(v)")
-                        print(test.reversed())
-                    }
+                    for val in values {
+                        let ascRange = test.range(equal: val)
+                        let descRange = test.reversed().range(equal: val)
 
-                    XCTAssertEqual(asc.range(equal: v), test.range(equal: v))
-                    XCTAssertEqual(desc.range(equal: v), test.reversed().range(equal: v))
+                        XCTAssertEqual(asc.range(equal: val), ascRange)
+                        XCTAssertEqual(desc.range(equal: val), descRange)
+                    }
                 }
             }
         }
@@ -144,78 +141,78 @@ final class OrderedCollectionTests: XCTestCase {
     func testAscRangeLess() {
         var test = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-        XCTAssertEqual(try! AscArray(test).range(less: 5), Range(uncheckedBounds: (lower: 0, upper: 4)))
+        XCTAssertEqual(try! AscArray(test).range(less: 5), test.range(less: 5))
 
         test = [4]
-        XCTAssertEqual(try! AscArray(test).range(less: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(try! AscArray(test).range(less: 5), test.range(less: 5))
 
         test = [4, 5]
-        XCTAssertEqual(try! AscArray(test).range(less: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(try! AscArray(test).range(less: 5), test.range(less: 5))
 
         test = [4, 4]
-        XCTAssertEqual(try! AscArray(test).range(less: 5), Range(uncheckedBounds: (lower: 0, upper: 1)))
+        XCTAssertEqual(try! AscArray(test).range(less: 5), test.range(less: 5))
 
         test = [5]
 
         XCTAssertNil(try! AscArray(test).range(less: 5))
 
         test = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        XCTAssertNil(try! AscArray(test).range(less: 5, range: Range(uncheckedBounds: (lower: 5, upper: 8))))
+        XCTAssertNil(try! AscArray(test).range(less: 5, range: 5 ..< 9))
     }
 
     func testDescRangeLess() {
         var test = [8, 7, 6, 5, 4, 3, 2, 1, 0]
 
-        XCTAssertEqual(try! DescArray(test).range(less: 5), Range(uncheckedBounds: (lower: 4, upper: 8)))
+        XCTAssertEqual(try! DescArray(test).range(less: 5), test.range(less: 5))
 
         test = [4]
-        XCTAssertEqual(try! DescArray(test).range(less: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(try! DescArray(test).range(less: 5), test.range(less: 5))
 
         test = [5, 4]
-        XCTAssertEqual(try! DescArray(test).range(less: 5), Range(uncheckedBounds: (lower: 1, upper: 1)))
+        XCTAssertEqual(try! DescArray(test).range(less: 5), test.range(less: 5))
 
         test = [5]
         XCTAssertNil(try! DescArray(test).range(less: 5))
 
         test = [8, 7, 6, 5, 4, 3, 2, 1, 0]
-        XCTAssertNil(try! DescArray(test).range(less: 5, range: Range(uncheckedBounds: (lower: 0, upper: 3))))
+        XCTAssertNil(try! DescArray(test).range(less: 5, range: 0 ..< 4))
 
         test = [28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 15, 15, 15, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 
-        XCTAssertEqual(try! DescArray(test).range(less: 15), Range(uncheckedBounds: (lower: 18, upper: 32)))
+        XCTAssertEqual(try! DescArray(test).range(less: 15), test.range(less: 15))
     }
 
     func testAscRangeLarge() {
         var test = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        XCTAssertEqual(try! AscArray(test).range(large: 5), Range(uncheckedBounds: (lower: 6, upper: 8)))
+        XCTAssertEqual(try! AscArray(test).range(large: 5), test.range(large: 5))
 
         test = [4]
-        XCTAssertEqual(try! AscArray(test).range(large: 2), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(try! AscArray(test).range(large: 2), test.range(large: 2))
 
         test = [5]
         XCTAssertNil(try! AscArray(test).range(large: 5))
 
         test = [5, 6]
-        XCTAssertEqual(try! AscArray(test).range(large: 5), Range(uncheckedBounds: (lower: 1, upper: 1)))
+        XCTAssertEqual(try! AscArray(test).range(large: 5), test.range(large: 5))
 
         test = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 16, 16, 16, 17, 18, 19]
 
-        XCTAssertEqual(try! AscArray(test).range(large: 16), Range(uncheckedBounds: (lower: 21, upper: 23)))
+        XCTAssertEqual(try! AscArray(test).range(large: 16), test.range(large: 16))
     }
 
     func testDescRangeLarge() {
         var test = [8, 7, 6, 5, 4, 3, 2, 1, 0]
 
-        XCTAssertEqual(try! DescArray(test).range(large: 5), Range(uncheckedBounds: (lower: 0, upper: 2)))
+        XCTAssertEqual(try! DescArray(test).range(large: 5), test.range(large: 5))
 
         test = [4]
-        XCTAssertEqual(try! DescArray(test).range(large: 3), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(try! DescArray(test).range(large: 3), test.range(large: 3))
 
         test = [5]
         XCTAssertNil(try! DescArray(test).range(large: 5))
 
         test = [6, 5]
-        XCTAssertEqual(try! DescArray(test).range(large: 5), Range(uncheckedBounds: (lower: 0, upper: 0)))
+        XCTAssertEqual(try! DescArray(test).range(large: 5), test.range(large: 5))
     }
 
     func testRangeLess() {
@@ -263,18 +260,15 @@ final class OrderedCollectionTests: XCTestCase {
                     asc = try! AscArray(test)
                     desc = try! DescArray(test.reversed())
 
-                    if asc.range(less: v) != test.range(less: v) {
-                        print("value:\(v)")
-                        print(test)
-                    }
+                    let values = Set(test)
 
-                    if desc.range(less: v) != test.reversed().range(less: v) {
-                        print("value:\(v)")
-                        print(test.reversed())
-                    }
+                    for val in values {
+                        let ascRange = test.range(less: val)
+                        let descRange = test.reversed().range(less: val)
 
-                    XCTAssertEqual(asc.range(less: v), test.range(less: v))
-                    XCTAssertEqual(desc.range(less: v), test.reversed().range(less: v))
+                        XCTAssertEqual(asc.range(less: val), ascRange)
+                        XCTAssertEqual(desc.range(less: val), descRange)
+                    }
                 }
             }
         }
@@ -325,9 +319,14 @@ final class OrderedCollectionTests: XCTestCase {
                     asc = try! AscArray(test)
                     desc = try! DescArray(test.reversed())
 
-                    for val in 0 ..< test.count {
-                        XCTAssertEqual(asc.range(large: val), test.range(large: val))
-                        XCTAssertEqual(desc.range(large: val), test.reversed().range(large: val))
+                    let values = Set(test)
+
+                    for val in values {
+                        let ascRange = test.range(large: val)
+                        let descRange = test.reversed().range(large: val)
+
+                        XCTAssertEqual(asc.range(large: val), ascRange)
+                        XCTAssertEqual(desc.range(large: val), descRange)
                     }
                 }
             }

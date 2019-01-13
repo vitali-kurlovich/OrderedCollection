@@ -13,6 +13,7 @@ extension BinarySearch {
         let right = self[rightIndex]
         let left = self[leftIndex]
 
+        // 1 2 3 4 5 6 7 8
         if left > large {
             return (leftIndex: leftIndex, rightIndex: rightIndex)
         }
@@ -28,12 +29,14 @@ extension BinarySearch {
         let midIndex = (leftIndex + rightIndex) / 2
         let mid = self[midIndex]
 
+        // 1 2 3 4 5 6 7 8
+
         if mid <= large {
             guard let subrange = ascRange(large: large, leftIndex: (midIndex + 1), rightIndex: rightIndex) else {
                 return (leftIndex: rightIndex, rightIndex: rightIndex)
             }
 
-            return (leftIndex: subrange.rightIndex, rightIndex: rightIndex)
+            return (leftIndex: subrange.leftIndex, rightIndex: rightIndex)
         }
 
         guard let subrange = ascRange(large: large, leftIndex: leftIndex, rightIndex: midIndex) else {
@@ -66,16 +69,12 @@ extension BinarySearch {
         let mid = self[midIndex]
 
         if mid <= large {
-            let findRange = leftIndex ..< (midIndex - 1)
-
             guard let subrange = descRange(large: large, leftIndex: leftIndex, rightIndex: (midIndex - 1)) else {
                 return (leftIndex: leftIndex, rightIndex: leftIndex)
             }
 
             return (leftIndex: leftIndex, rightIndex: subrange.rightIndex)
         }
-
-        let findRange = midIndex ..< rightIndex
 
         guard let subrange = descRange(large: large, leftIndex: midIndex, rightIndex: rightIndex) else {
             return (leftIndex: midIndex, rightIndex: midIndex)
