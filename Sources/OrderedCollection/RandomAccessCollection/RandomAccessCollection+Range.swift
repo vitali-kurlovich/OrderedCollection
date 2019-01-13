@@ -8,7 +8,7 @@
 import Foundation
 
 extension BidirectionalCollection
-    where Self.Element: Comparable,
+    where Self.Element: Equatable,
     Self.Index: SignedInteger,
     Self.Index.Stride == Self.Index {
     public
@@ -40,7 +40,12 @@ extension BidirectionalCollection
 
         return left ..< (right + 1) as? Self.Indices
     }
+}
 
+extension BidirectionalCollection
+    where Self.Element: Comparable,
+    Self.Index: SignedInteger,
+    Self.Index.Stride == Self.Index {
     public
     func range(less: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
         guard count > 0 else { return nil }
