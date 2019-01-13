@@ -56,33 +56,43 @@ extension AscArray: OrderedCollection {
     typealias Element = ElementType
 
     public
-    var isAscending: Bool {
-        return true
-    }
+    typealias Index = Int
 
     public
-    subscript(index: Int) -> ElementType {
-        return buffer[index]
+    typealias Indices = Range<Int>
+
+    public subscript(position: Int) -> ElementType {
+        return buffer[position]
     }
 
-    public
-    func index(after i: Int) -> Int {
-        return i + 1
+    public func index(before i: Int) -> Int {
+        return buffer.index(before: i)
     }
 
-    public
-    var startIndex: Int {
+    public func index(after i: Int) -> Int {
+        return buffer.index(after: i)
+    }
+
+    public var startIndex: Int {
         return buffer.startIndex
     }
 
-    public
-    var endIndex: Int {
+    public var endIndex: Int {
         return buffer.endIndex
+    }
+
+    public var indices: Range<Int> {
+        return buffer.indices
     }
 
     public
     var count: Int {
         return buffer.count
+    }
+
+    public
+    var isAscending: Bool {
+        return true
     }
 }
 
@@ -91,32 +101,42 @@ extension DescArray: OrderedCollection {
     typealias Element = ElementType
 
     public
-    var isAscending: Bool {
-        return false
-    }
+    typealias Index = Int
 
     public
-    subscript(index: Int) -> ElementType {
-        return buffer[index]
+    typealias Indices = Range<Int>
+
+    public subscript(position: Int) -> ElementType {
+        return buffer[position]
     }
 
-    public
-    func index(after i: Int) -> Int {
-        return i + 1
+    public func index(before i: Int) -> Int {
+        return buffer.index(before: i)
     }
 
-    public
-    var startIndex: Int {
+    public func index(after i: Int) -> Int {
+        return buffer.index(after: i)
+    }
+
+    public var startIndex: Int {
         return buffer.startIndex
     }
 
-    public
-    var endIndex: Int {
+    public var endIndex: Int {
         return buffer.endIndex
+    }
+
+    public var indices: Range<Int> {
+        return buffer.indices
     }
 
     public
     var count: Int {
         return buffer.count
+    }
+
+    public
+    var isAscending: Bool {
+        return false
     }
 }

@@ -24,16 +24,12 @@ extension OrderedCollection {
             return nil
         }
 
-        // 1, 2, 3, 4, 5, 6, 7, 8
-
         guard rightIndex - leftIndex >= 2 else {
             return Range(uncheckedBounds: (lower: rightIndex, upper: rightIndex))
         }
 
         let midIndex = (leftIndex + rightIndex) / 2
         let mid = self[midIndex]
-
-        // 1 2 3 4 4 4 4 5 6 7 8
 
         if mid <= large {
             let findRange = Range(uncheckedBounds: (lower: midIndex + 1, upper: rightIndex))

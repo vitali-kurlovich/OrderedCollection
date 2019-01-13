@@ -7,15 +7,18 @@
 
 import Foundation
 
-extension RandomAccessCollection where Self.Element: Equatable, Self.Index == Int {
+extension BidirectionalCollection
+    where Self.Element: Comparable,
+    Self.Index: SignedInteger,
+    Self.Index.Stride == Self.Index {
     public
-    func range(equal value: Self.Element, range: Range<Int>? = nil) -> Range<Int>? {
+    func range(equal value: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
         guard count > 0 else { return nil }
 
-        let range = range != nil ? range! : Range(uncheckedBounds: (lower: 0, upper: count - 1))
+        let range = range != nil ? range! : indices
 
-        var l: Int?
-        for index in range.lowerBound ... range.upperBound {
+        var l: Self.Indices.Element?
+        for index in range {
             if self[index] == value {
                 l = index
                 break
@@ -27,7 +30,7 @@ extension RandomAccessCollection where Self.Element: Equatable, Self.Index == In
         }
 
         var right = left
-        for index in left ... range.upperBound {
+        for index in left ... range.last! {
             if self[index] == value {
                 right = index
             } else {
@@ -35,21 +38,19 @@ extension RandomAccessCollection where Self.Element: Equatable, Self.Index == In
             }
         }
 
-        return Range(uncheckedBounds: (lower: left, upper: right))
+        return left ..< (right + 1) as? Self.Indices
     }
-}
 
-extension RandomAccessCollection where Self.Element: Comparable, Self.Index == Int {
     public
-    func range(less: Self.Element, range: Range<Int>? = nil) -> Range<Int>? {
+    func range(less: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
         guard count > 0 else { return nil }
 
-        let range = range != nil ? range! : Range(uncheckedBounds: (lower: 0, upper: count - 1))
+        let range = range != nil ? range! : indices
 
-        var left: Int?
-        var right: Int?
+        var left: Self.Index?
+        var right: Self.Index?
 
-        for index in range.lowerBound ... range.upperBound {
+        for index in range.first! ... range.last! {
             let value = self[index]
 
             if value < less {
@@ -70,19 +71,19 @@ extension RandomAccessCollection where Self.Element: Comparable, Self.Index == I
             return nil
         }
 
-        return Range(uncheckedBounds: (lower: leftIndex, upper: rightIndex))
+        return leftIndex ..< (rightIndex + 1) as? Self.Indices
     }
 
     public
-    func range(large: Self.Element, range: Range<Int>? = nil) -> Range<Int>? {
+    func range(large: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
         guard count > 0 else { return nil }
 
-        let range = range != nil ? range! : Range(uncheckedBounds: (lower: 0, upper: count - 1))
+        let range = range != nil ? range! : indices
 
-        var left: Int?
-        var right: Int?
+        var left: Self.Index?
+        var right: Self.Index?
 
-        for index in range.lowerBound ... range.upperBound {
+        for index in range.first! ... range.last! {
             let value = self[index]
 
             if value > large {
@@ -103,6 +104,6 @@ extension RandomAccessCollection where Self.Element: Comparable, Self.Index == I
             return nil
         }
 
-        return Range(uncheckedBounds: (lower: leftIndex, upper: rightIndex))
+        return leftIndex ..< (rightIndex + 1) as? Self.Indices
     }
 }
