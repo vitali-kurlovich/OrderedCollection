@@ -55,28 +55,29 @@ extension BinarySearch {
     }
 
     public
-    func binarySearch(large: Element, range: Self.Indices? = nil, reverse: Bool = false) -> Self.Indices? {
+    func binarySearch(greater: Element, range: Self.Indices? = nil, reverse: Bool = false) -> Self.Indices? {
         guard count > 0 else { return nil }
 
         let range = range != nil ? range! : indices
         if range.first == range.last {
-            if self[range.last!] > large {
+            if self[range.last!] > greater {
                 return range
             }
             return nil
         }
 
         if !reverse {
-            guard let result = ascRange(large: large, leftIndex: range.first!, rightIndex: range.last!) else {
+            guard let result = ascRange(greater: greater, leftIndex: range.first!, rightIndex: range.last!) else {
                 return nil
             }
             return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
         }
 
-        guard let result = descRange(large: large, leftIndex: range.first!, rightIndex: range.last!) else {
+        guard let result = descRange(greater: greater, leftIndex: range.first!, rightIndex: range.last!) else {
             return nil
         }
 
         return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
     }
 }
+

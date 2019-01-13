@@ -9,16 +9,16 @@ import Foundation
 
 internal
 extension BinarySearch {
-    func ascRange(large: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element)? {
+    func ascRange(greater: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element)? {
         let right = self[rightIndex]
         let left = self[leftIndex]
 
         // 1 2 3 4 5 6 7 8
-        if left > large {
+        if left > greater {
             return (leftIndex: leftIndex, rightIndex: rightIndex)
         }
 
-        if right <= large {
+        if right <= greater {
             return nil
         }
 
@@ -31,15 +31,15 @@ extension BinarySearch {
 
         // 1 2 3 4 5 6 7 8
 
-        if mid <= large {
-            guard let subrange = ascRange(large: large, leftIndex: (midIndex + 1), rightIndex: rightIndex) else {
+        if mid <= greater {
+            guard let subrange = ascRange(greater: greater, leftIndex: (midIndex + 1), rightIndex: rightIndex) else {
                 return (leftIndex: rightIndex, rightIndex: rightIndex)
             }
 
             return (leftIndex: subrange.leftIndex, rightIndex: rightIndex)
         }
 
-        guard let subrange = ascRange(large: large, leftIndex: leftIndex, rightIndex: midIndex) else {
+        guard let subrange = ascRange(greater: greater, leftIndex: leftIndex, rightIndex: midIndex) else {
             return (leftIndex: midIndex, rightIndex: midIndex)
         }
 
@@ -49,15 +49,15 @@ extension BinarySearch {
 
 internal
 extension BinarySearch {
-    func descRange(large: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element)? {
+    func descRange(greater: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element)? {
         let right = self[rightIndex]
         let left = self[leftIndex]
 
-        if right > large {
+        if right > greater {
             return (leftIndex: leftIndex, rightIndex: rightIndex)
         }
 
-        if left <= large {
+        if left <= greater {
             return nil
         }
 
@@ -68,15 +68,15 @@ extension BinarySearch {
         let midIndex = (leftIndex + rightIndex) / 2
         let mid = self[midIndex]
 
-        if mid <= large {
-            guard let subrange = descRange(large: large, leftIndex: leftIndex, rightIndex: (midIndex - 1)) else {
+        if mid <= greater {
+            guard let subrange = descRange(greater: greater, leftIndex: leftIndex, rightIndex: (midIndex - 1)) else {
                 return (leftIndex: leftIndex, rightIndex: leftIndex)
             }
 
             return (leftIndex: leftIndex, rightIndex: subrange.rightIndex)
         }
 
-        guard let subrange = descRange(large: large, leftIndex: midIndex, rightIndex: rightIndex) else {
+        guard let subrange = descRange(greater: greater, leftIndex: midIndex, rightIndex: rightIndex) else {
             return (leftIndex: midIndex, rightIndex: midIndex)
         }
 
