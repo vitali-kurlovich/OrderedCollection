@@ -18,7 +18,6 @@ struct DescCollection<Element: Comparable, Buffer> where Buffer: RandomAccessCol
     }
 }
 
-
 extension DescCollection: BinarySearch where Buffer.Index: SignedInteger {}
 
 extension DescCollection: OrderedCollection where Buffer.Index: SignedInteger {

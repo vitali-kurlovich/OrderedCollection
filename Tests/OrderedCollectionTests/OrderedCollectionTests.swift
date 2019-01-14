@@ -184,35 +184,35 @@ final class OrderedCollectionTests: XCTestCase {
 
     func testAscRangeLarge() {
         var test = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        XCTAssertEqual(try! AscArray(test).range(large: 5), test.range(large: 5))
+        XCTAssertEqual(try! AscArray(test).range(greater: 5), test.range(greater: 5))
 
         test = [4]
-        XCTAssertEqual(try! AscArray(test).range(large: 2), test.range(large: 2))
+        XCTAssertEqual(try! AscArray(test).range(greater: 2), test.range(greater: 2))
 
         test = [5]
-        XCTAssertNil(try! AscArray(test).range(large: 5))
+        XCTAssertNil(try! AscArray(test).range(greater: 5))
 
         test = [5, 6]
-        XCTAssertEqual(try! AscArray(test).range(large: 5), test.range(large: 5))
+        XCTAssertEqual(try! AscArray(test).range(greater: 5), test.range(greater: 5))
 
         test = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 16, 16, 16, 17, 18, 19]
 
-        XCTAssertEqual(try! AscArray(test).range(large: 16), test.range(large: 16))
+        XCTAssertEqual(try! AscArray(test).range(greater: 16), test.range(greater: 16))
     }
 
     func testDescRangeLarge() {
         var test = [8, 7, 6, 5, 4, 3, 2, 1, 0]
 
-        XCTAssertEqual(try! DescArray(test).range(large: 5), test.range(large: 5))
+        XCTAssertEqual(try! DescArray(test).range(greater: 5), test.range(greater: 5))
 
         test = [4]
-        XCTAssertEqual(try! DescArray(test).range(large: 3), test.range(large: 3))
+        XCTAssertEqual(try! DescArray(test).range(greater: 3), test.range(greater: 3))
 
         test = [5]
-        XCTAssertNil(try! DescArray(test).range(large: 5))
+        XCTAssertNil(try! DescArray(test).range(greater: 5))
 
         test = [6, 5]
-        XCTAssertEqual(try! DescArray(test).range(large: 5), test.range(large: 5))
+        XCTAssertEqual(try! DescArray(test).range(greater: 5), test.range(greater: 5))
     }
 
     func testRangeLess() {
@@ -280,22 +280,22 @@ final class OrderedCollectionTests: XCTestCase {
         var asc = try! AscArray(test)
         var desc = try! DescArray(test)
 
-        XCTAssertNil(asc.range(large: 5))
-        XCTAssertNil(desc.range(large: 5))
+        XCTAssertNil(asc.range(greater: 5))
+        XCTAssertNil(desc.range(greater: 5))
 
         test = [3, 4]
         asc = try! AscArray(test)
         desc = try! DescArray(test.reversed())
 
-        XCTAssertNil(asc.range(large: 4))
-        XCTAssertNil(desc.range(large: 4))
+        XCTAssertNil(asc.range(greater: 4))
+        XCTAssertNil(desc.range(greater: 4))
 
         test = [2, 3, 4]
         asc = try! AscArray(test)
         desc = try! DescArray(test.reversed())
 
-        XCTAssertNil(asc.range(large: 4))
-        XCTAssertNil(desc.range(large: 4))
+        XCTAssertNil(asc.range(greater: 4))
+        XCTAssertNil(desc.range(greater: 4))
 
         test.reserveCapacity(18 * 3)
         for begin in 0 ..< 18 {
@@ -322,11 +322,11 @@ final class OrderedCollectionTests: XCTestCase {
                     let values = Set(test)
 
                     for val in values {
-                        let ascRange = test.range(large: val)
-                        let descRange = test.reversed().range(large: val)
+                        let ascRange = test.range(greater: val)
+                        let descRange = test.reversed().range(greater: val)
 
-                        XCTAssertEqual(asc.range(large: val), ascRange)
-                        XCTAssertEqual(desc.range(large: val), descRange)
+                        XCTAssertEqual(asc.range(greater: val), ascRange)
+                        XCTAssertEqual(desc.range(greater: val), descRange)
                     }
                 }
             }

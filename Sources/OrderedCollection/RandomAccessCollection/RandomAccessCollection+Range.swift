@@ -80,7 +80,7 @@ extension BidirectionalCollection
     }
 
     public
-    func range(large: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
+    func range(greater: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
         guard count > 0 else { return nil }
 
         let range = range != nil ? range! : indices
@@ -90,8 +90,7 @@ extension BidirectionalCollection
 
         for index in range.first! ... range.last! {
             let value = self[index]
-
-            if value > large {
+            if value > greater {
                 if left == nil {
                     left = index
                     right = index
@@ -112,4 +111,3 @@ extension BidirectionalCollection
         return leftIndex ..< (rightIndex + 1) as? Self.Indices
     }
 }
-

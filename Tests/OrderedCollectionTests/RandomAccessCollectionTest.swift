@@ -95,35 +95,35 @@ final class RandomAccessCollectionTest: XCTestCase {
 
     func testRangeLarge() {
         var test = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        var range = test.range(large: 5)!
+        var range = test.range(greater: 5)!
         XCTAssertEqual(range, 6 ..< 9)
         XCTAssertEqual(test[range], [6, 7, 8])
 
         test = [8, 7, 6, 5, 4, 3, 2, 1, 0]
-        range = test.range(large: 5)!
+        range = test.range(greater: 5)!
         XCTAssertEqual(range, 0 ..< 3)
         XCTAssertEqual(test[range], [8, 7, 6])
 
         test = [0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 1, 2, 3, 4, 5, 6, 7, 8]
-        range = test.range(large: 5)!
+        range = test.range(greater: 5)!
         XCTAssertEqual(range, 6 ..< 9)
         XCTAssertEqual(test[range], [6, 7, 8])
 
         test = [8, 7, 6, 5, 4, 3, 2, 1, 0, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        range = test.range(large: 5)!
+        range = test.range(greater: 5)!
         XCTAssertEqual(range, 0 ..< 3)
         XCTAssertEqual(test[range], [8, 7, 6])
 
         test = [4]
-        XCTAssertNil(test.range(large: 5))
+        XCTAssertNil(test.range(greater: 5))
 
         test = [5, 6]
-        range = test.range(large: 5)!
+        range = test.range(greater: 5)!
         XCTAssertEqual(range, 1 ..< 2)
         XCTAssertEqual(test[range], [6])
 
         test = [6, 6]
-        range = test.range(large: 5)!
+        range = test.range(greater: 5)!
         XCTAssertEqual(range, 0 ..< 2)
         XCTAssertEqual(test[range], [6, 6])
     }

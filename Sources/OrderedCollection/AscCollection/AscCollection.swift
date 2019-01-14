@@ -27,8 +27,6 @@ extension AscCollection: OrderedCollection where Buffer.Index: SignedInteger {
     }
 }
 
-
-
 extension AscCollection {
     public
     var isEmpty: Bool { return buffer.isEmpty }

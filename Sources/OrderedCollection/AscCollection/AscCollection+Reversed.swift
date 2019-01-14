@@ -16,7 +16,6 @@ extension AscCollection {
     }
 }
 
-
 extension DescCollection where Buffer == ReversedCollection<[Element]> {
     public
     func reversed() -> AscCollection<Element, [Element]> {
@@ -32,4 +31,3 @@ extension DescCollection where Buffer == ReversedCollection<ArraySlice<Element>>
         return AscCollection(buffer: reversed)
     }
 }
-
