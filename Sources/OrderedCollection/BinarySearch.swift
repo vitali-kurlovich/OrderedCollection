@@ -80,4 +80,3 @@ extension BinarySearch {
         return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
     }
 }
-

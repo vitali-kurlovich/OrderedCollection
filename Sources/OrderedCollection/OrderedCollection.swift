@@ -33,10 +33,8 @@ extension OrderedCollection {
     }
 }
 
-
 public
 extension OrderedCollection {
-    
     /// Returns a Boolean value indicating whether the collection contains the
     /// given element.
     ///
@@ -46,23 +44,22 @@ extension OrderedCollection {
     ///   `false`.
     ///
     /// - Complexity: O(ln(*n*)), where *n* is the length of the collection.
-    
+
     func contains(_ element: Self.Element, range: Self.Indices? = nil) -> Bool {
         return binarySearch(equal: element, range: range, reverse: !isAscending) != nil
     }
-    
-    func contains( less: Self.Element, range: Self.Indices? = nil) -> Bool {
-        guard count > 0 else { return false}
+
+    func contains(less: Self.Element, range: Self.Indices? = nil) -> Bool {
+        guard count > 0 else { return false }
         return binarySearch(less: less, range: range, reverse: !isAscending) != nil
     }
-    
-    func contains( greater: Self.Element, range: Self.Indices? = nil) -> Bool {
-         guard count > 0 else { return false}
-        
+
+    func contains(greater: Self.Element, range: Self.Indices? = nil) -> Bool {
+        guard count > 0 else { return false }
+
         return binarySearch(greater: greater, range: range, reverse: !isAscending) != nil
     }
 }
-
 
 public
 extension OrderedCollection {
@@ -72,15 +69,15 @@ extension OrderedCollection {
     ///   elements, returns `nil`.
     ///
     /// - Complexity: O(*1*)
-    
+
     func min() -> Self.Element? {
-        guard count > 0 else { return nil}
+        guard count > 0 else { return nil }
         if isAscending {
-            return self.first
+            return first
         }
-        return self.last
+        return last
     }
-    
+
     /// Returns the maximum element in the collection.
     ///
     /// - Returns: The collection's minimum element. If the collection has no
@@ -88,10 +85,10 @@ extension OrderedCollection {
     ///
     /// - Complexity: O(*1*)
     func max() -> Self.Element? {
-        guard count > 0 else { return nil}
+        guard count > 0 else { return nil }
         if isAscending {
-            return self.last
+            return last
         }
-        return self.first
+        return first
     }
 }
