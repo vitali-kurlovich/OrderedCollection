@@ -18,13 +18,6 @@ struct DescCollection<Element: Comparable, Buffer> where Buffer: RandomAccessCol
     }
 }
 
-extension DescCollection {
-    public
-    func reversed() -> AscCollection<Element, ReversedCollection<Buffer>> {
-        let reversed = buffer.reversed()
-        return AscCollection<Element, ReversedCollection<Buffer>>(buffer: reversed)
-    }
-}
 
 extension DescCollection: BinarySearch where Buffer.Index: SignedInteger {}
 

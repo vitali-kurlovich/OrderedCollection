@@ -211,6 +211,13 @@ final class AscArrayTest: XCTestCase {
     func testReverse() {
         let array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
         let rev = array.reversed()
+        
         XCTAssertEqual(Array(rev), [8, 7, 6, 5, 4, 3, 2, 1])
+        XCTAssertEqual(rev.reversed(), array)
+        
+        let slice = array[0..<4]
+        let revSlice = slice.reversed()
+        XCTAssertEqual(Array(revSlice), [4, 3, 2, 1])
+        XCTAssertEqual(revSlice.reversed(), slice)
     }
 }

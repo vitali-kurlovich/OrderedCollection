@@ -27,13 +27,7 @@ extension AscCollection: OrderedCollection where Buffer.Index: SignedInteger {
     }
 }
 
-extension AscCollection {
-    public
-    func reversed() -> DescCollection<Element, ReversedCollection<Buffer>> {
-        let reversed = buffer.reversed()
-        return DescCollection<Element, ReversedCollection<Buffer>>(buffer: reversed)
-    }
-}
+
 
 extension AscCollection {
     public
