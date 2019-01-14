@@ -22,6 +22,17 @@ final class AscArrayTest: XCTestCase {
         XCTAssert(Array(ascArray) == [0, 1, 2, 3, 4])
 
         XCTAssert([Int]() == Array(AscArray<Int>()))
+
+        XCTAssertTrue((try! AscArray([0, 1, 2, 3, 4])).elementsEqual([0, 1, 2, 3, 4]))
+        let slice = [0, 1, 2, 3, 4][0 ..< 3]
+
+        XCTAssertTrue((try! AscArray([0, 1, 2])).elementsEqual(slice))
+
+        let array = try! AscArray([0, 1, 2, 3, 4])
+        let ascSlice = array[0 ..< 3]
+
+        let half = try! AscArray([0, 1, 2])
+        XCTAssertTrue(ascSlice.elementsEqual(half))
     }
 
     func testAppend() {
@@ -64,13 +75,85 @@ final class AscArrayTest: XCTestCase {
         XCTAssert(Array(emptyArray) == [0, 1, 2])
     }
 
+    func testInsertCollection() {
+        var array = try! AscArray([0, 1, 2, 6, 7, 8])
+
+        try? array.insert(3, at: 3)
+
+        var test = [0, 1, 2, 6, 7, 8]
+        test.insert(3, at: 3)
+        XCTAssertEqual(test, test.sorted())
+        XCTAssertEqual(test, Array(array))
+
+        array = try! AscArray([0, 1, 2])
+        try? array.insert(3, at: 3)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3])
+
+        array = try! AscArray([3])
+        try? array.insert(2, at: 0)
+        XCTAssertEqual(Array(array), [2, 3])
+
+        array = try! AscArray([1, 2, 3])
+        try? array.insert(0, at: 0)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3])
+
+        array = try! AscArray([0, 1, 2, 6, 7, 8])
+        XCTAssertThrowsError(try array.insert(3, at: 2))
+        XCTAssertThrowsError(try array.insert(9, at: 2))
+
+        array = try! AscArray([0, 1, 2, 3])
+        XCTAssertThrowsError(try array.insert(1, at: 0))
+
+        array = try! AscArray([0, 1, 2, 3])
+        XCTAssertThrowsError(try array.insert(2, at: 4))
+
+        array = try! AscArray([0])
+        XCTAssertThrowsError(try array.insert(1, at: 0))
+
+        array = try! AscArray([3])
+        XCTAssertThrowsError(try array.insert(2, at: 1))
+
+        array = try! AscArray([0, 1, 2, 6, 7, 8])
+        let insert = [3, 4, 5]
+
+        try? array.insert(contentsOf: insert, at: 3)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3, 4, 5, 6, 7, 8])
+
+        array = try! AscArray([3, 4, 5, 6, 7, 8])
+        try? array.insert(contentsOf: [0, 1, 2], at: 0)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3, 4, 5, 6, 7, 8])
+
+        array = try! AscArray([0, 1, 2, 3, 4, 5])
+        try? array.insert(contentsOf: [6, 7, 8], at: 6)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3, 4, 5, 6, 7, 8])
+
+        array = try! AscArray([0, 1, 2, 3, 4, 5])
+        try? array.insert(contentsOf: try! AscArray([6, 7, 8]), at: 6)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3, 4, 5, 6, 7, 8])
+
+        array = try! AscArray([0, 1, 2, 5])
+        try? array.insert(contentsOf: try! AscArray([3, 4, 5]), at: 3)
+        XCTAssertEqual(Array(array), [0, 1, 2, 3, 4, 5, 5])
+
+        array = try! AscArray([0, 1, 2, 3, 4, 5])
+        XCTAssertThrowsError(try array.insert(contentsOf: [-1, 0, 1], at: 0))
+
+        array = try! AscArray([0, 1, 2, 3, 4, 5])
+        XCTAssertThrowsError(try array.insert(contentsOf: [4, 5, 6], at: 6))
+
+        array = try! AscArray([0, 1, 5])
+        XCTAssertThrowsError(try array.insert(contentsOf: [2, 3, 4, 5, 6], at: 2))
+
+        array = try! AscArray([0, 1, 5])
+        XCTAssertThrowsError(try array.insert(contentsOf: [0, 1], at: 2))
+    }
+
     func testRemove() {
         var array = try! AscArray([6, 7, 8, 9, 10])
         _ = array.remove(at: 2)
         XCTAssert(Array(array) == [6, 7, 9, 10])
 
         _ = array.removeLast()
-
         XCTAssert(Array(array) == [6, 7, 9])
     }
 
@@ -121,8 +204,13 @@ final class AscArrayTest: XCTestCase {
 
     func testSlice() {
         let array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
-
         let slice = array[1 ..< 6]
         XCTAssertEqual(Array(slice), [2, 3, 4, 5, 6])
+    }
+
+    func testReverse() {
+        let array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        let rev = array.reversed()
+        XCTAssertEqual(Array(rev), [8, 7, 6, 5, 4, 3, 2, 1])
     }
 }

@@ -1,5 +1,5 @@
 //
-//  AscCollection.swift
+//  DescCollection.swift
 //  OrderedCollection
 //
 //  Created by Vitali Kurlovich on 1/14/19.
@@ -8,7 +8,7 @@
 import Foundation
 
 public
-struct AscCollection<Element: Comparable, Buffer> where Buffer: RandomAccessCollection, Buffer.Element == Element {
+struct DescCollection<Element: Comparable, Buffer> where Buffer: RandomAccessCollection, Buffer.Element == Element {
     internal
     var buffer: Buffer
 
@@ -18,24 +18,24 @@ struct AscCollection<Element: Comparable, Buffer> where Buffer: RandomAccessColl
     }
 }
 
-extension AscCollection: BinarySearch where Buffer.Index: SignedInteger {}
+extension DescCollection {
+    public
+    func reversed() -> AscCollection<Element, ReversedCollection<Buffer>> {
+        let reversed = buffer.reversed()
+        return AscCollection<Element, ReversedCollection<Buffer>>(buffer: reversed)
+    }
+}
 
-extension AscCollection: OrderedCollection where Buffer.Index: SignedInteger {
+extension DescCollection: BinarySearch where Buffer.Index: SignedInteger {}
+
+extension DescCollection: OrderedCollection where Buffer.Index: SignedInteger {
     public
     var isAscending: Bool {
-        return true
+        return false
     }
 }
 
-extension AscCollection {
-    public
-    func reversed() -> DescCollection<Element, ReversedCollection<Buffer>> {
-        let reversed = buffer.reversed()
-        return DescCollection<Element, ReversedCollection<Buffer>>(buffer: reversed)
-    }
-}
-
-extension AscCollection {
+extension DescCollection {
     public
     var isEmpty: Bool { return buffer.isEmpty }
 
@@ -45,23 +45,23 @@ extension AscCollection {
     }
 }
 
-extension AscCollection: Equatable where Buffer: Equatable {
+extension DescCollection: Equatable where Buffer: Equatable {
     public
-    static func == (lhs: AscCollection, rhs: AscCollection) -> Bool {
+    static func == (lhs: DescCollection, rhs: DescCollection) -> Bool {
         return lhs.buffer == rhs.buffer
     }
 }
 
-extension AscCollection {
+extension DescCollection {
     public
     func elementsEqual<OtherSequence>(_ other: OtherSequence) -> Bool where OtherSequence: Sequence, Element == OtherSequence.Element {
         return buffer.elementsEqual(other)
     }
 }
 
-// extension AscCollection where Buffer == ReversedCollection<[Element]> {}
+// extension DescCollection where Buffer == ReversedCollection<[Element]> {}
 
-extension AscCollection: BidirectionalCollection {
+extension DescCollection: BidirectionalCollection {
     public
     typealias Element = Buffer.Element
 

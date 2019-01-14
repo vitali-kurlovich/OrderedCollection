@@ -112,3 +112,26 @@ extension BidirectionalCollection
         return leftIndex ..< (rightIndex + 1) as? Self.Indices
     }
 }
+
+extension Sequence where Self.Element: Comparable {
+    public
+    func minmax() -> (min: Self.Element?, max: Self.Element?) {
+        var iterator = makeIterator()
+
+        guard var min = iterator.next() else {
+            return (min: nil, max: nil)
+        }
+
+        var max = min
+
+        while let current = iterator.next() {
+            if min > current {
+                min = current
+            } else if max < current {
+                max = current
+            }
+        }
+
+        return (min: min, max: max)
+    }
+}

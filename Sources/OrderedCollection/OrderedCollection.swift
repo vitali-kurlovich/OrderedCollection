@@ -91,4 +91,8 @@ extension OrderedCollection {
         }
         return first
     }
+
+    func minmax() -> (min: Self.Element?, max: Self.Element?) {
+        return (min: min(), max: max())
+    }
 }

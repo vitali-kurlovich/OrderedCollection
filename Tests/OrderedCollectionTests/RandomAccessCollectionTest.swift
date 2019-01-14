@@ -127,4 +127,22 @@ final class RandomAccessCollectionTest: XCTestCase {
         XCTAssertEqual(range, 0 ..< 2)
         XCTAssertEqual(test[range], [6, 6])
     }
+
+    func testMinMax() {
+        let count = 34000
+
+        var test = [Int]()
+        test.reserveCapacity(count)
+
+        for i in 0 ..< 10 {
+            test.removeAll()
+            for _ in 0 ..< count {
+                test.append(Int.random(in: 0 ..< (count * 1000 * (i + 1))))
+            }
+
+            let minmax = test.minmax()
+            XCTAssertEqual(test.min(), minmax.min)
+            XCTAssertEqual(test.max(), minmax.max)
+        }
+    }
 }
