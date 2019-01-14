@@ -18,24 +18,7 @@ typealias ReversedAscCollection<Element: Comparable> = AscCollection<Element, Re
 
 extension Array where Element: Comparable {
     public
-    typealias Index = Int
-    
-    public
-    typealias Indices = Range<Int>
-    
-    public subscript(position: Int) -> ElementType {
-        return buffer[position]
-    }
-    
-    public func index(before i: Int) -> Int {
-        return buffer.index(before: i)
-    }
-    
-    public func index(after i: Int) -> Int {
-        return buffer.index(after: i)
-    }
-    
-    public var startIndex: Int {
-        return buffer.startIndex
+    init(_ collection: AscArray<Element>) {
+        self.init(collection.buffer)
     }
 }
