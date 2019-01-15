@@ -9,11 +9,11 @@ import Foundation
 
 extension Sequence where Self.Element: Comparable {
     public
-    func minmax() -> (min: Self.Element?, max: Self.Element?) {
+    func minmax() -> (min: Self.Element, max: Self.Element)? {
         var iterator = makeIterator()
 
         guard var min = iterator.next() else {
-            return (min: nil, max: nil)
+            return nil
         }
 
         var max = min

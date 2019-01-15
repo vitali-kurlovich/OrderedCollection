@@ -46,6 +46,11 @@ extension OrderedCollection {
     /// - Complexity: O(ln(*n*)), where *n* is the length of the collection.
 
     func contains(_ element: Self.Element, range: Self.Indices? = nil) -> Bool {
+//        if isAscending {
+//            let range = range != nil ? range! : indices
+//            return binarySearchOneAsc(equal: element, leftIndex: range.first! , rightIndex: range.last!) != nil
+//        }
+
         return binarySearch(equal: element, range: range, reverse: !isAscending) != nil
     }
 
@@ -92,7 +97,10 @@ extension OrderedCollection {
         return first
     }
 
-    func minmax() -> (min: Self.Element?, max: Self.Element?) {
-        return (min: min(), max: max())
+    func minmax() -> (min: Self.Element, max: Self.Element)? {
+        guard let min = min(), let max = max() else {
+            return nil
+        }
+        return (min: min, max: max)
     }
 }

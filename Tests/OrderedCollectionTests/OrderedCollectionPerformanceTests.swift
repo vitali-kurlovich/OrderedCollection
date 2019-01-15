@@ -43,7 +43,8 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
 
         measure {
             for val in values {
-                _ = ascArray.range(less: val)
+                _ = ascArray.range(equal: val)
+                // _ = ascArray.contains(val)
             }
         }
     }
