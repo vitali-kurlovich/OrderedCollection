@@ -7,4 +7,3 @@
 
 import Foundation
 
-extension AscCollection where Buffer == [Element] {}

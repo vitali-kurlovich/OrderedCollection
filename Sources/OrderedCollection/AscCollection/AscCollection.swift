@@ -37,12 +37,6 @@ extension AscCollection {
     }
 }
 
-extension AscCollection: Equatable where Buffer: Equatable {
-    public
-    static func == (lhs: AscCollection, rhs: AscCollection) -> Bool {
-        return lhs.buffer == rhs.buffer
-    }
-}
 
 extension AscCollection {
     public

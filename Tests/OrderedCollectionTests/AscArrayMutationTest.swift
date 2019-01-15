@@ -127,10 +127,19 @@ final class AscArrayMutationTest: XCTestCase {
 
     func testRemove() {
         var array = try! AscArray([6, 7, 8, 9, 10])
-        _ = array.remove(at: 2)
+        var result = array.remove(at: 2)
+        XCTAssertEqual(result, 8)
         XCTAssert(Array(array) == [6, 7, 9, 10])
 
-        _ = array.removeLast()
+        result = array.removeLast()
+        XCTAssertEqual(result, 10)
         XCTAssert(Array(array) == [6, 7, 9])
+        
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        var slice = array[0..<5]
+        XCTAssert(Array(slice) == [ 1, 2, 3, 4, 5])
+        result = slice.remove(at: 2)
+        XCTAssertEqual(result, 3)
+        XCTAssertEqual(Array(slice), [ 1, 2, 4, 5])
     }
 }

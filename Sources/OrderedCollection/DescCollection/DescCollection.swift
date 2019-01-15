@@ -37,12 +37,6 @@ extension DescCollection {
     }
 }
 
-extension DescCollection: Equatable where Buffer: Equatable {
-    public
-    static func == (lhs: DescCollection, rhs: DescCollection) -> Bool {
-        return lhs.buffer == rhs.buffer
-    }
-}
 
 extension DescCollection {
     public
