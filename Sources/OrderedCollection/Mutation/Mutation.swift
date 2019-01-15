@@ -16,6 +16,21 @@ protocol MutationCollectionCapacity {
 }
 
 public
+protocol MutationCollectionAppend {
+    associatedtype Element
+
+    /// Adds a new element at the end of the collection.
+    ///
+    /// - Parameter newElement: The element to append to the collection.
+    mutating func append(_ newElement: Element)
+
+    /// Adds the elements of a sequence to the end of the collection.
+    ///
+    /// - Parameter newElements: The elements to append to the collection.
+    mutating func append<S>(contentsOf newElements: S) where Element == S.Element, S: Sequence
+}
+
+public
 protocol MutationCollectionRemove {
     associatedtype Element
 
@@ -101,12 +116,16 @@ protocol MutationCollectionRemove {
 
 func foof() {
     var array = [0, 2]
-    array.removeFirst()
+    array.append(3)
 }
 
 extension Array: MutationCollectionCapacity {}
 
 extension ArraySlice: MutationCollectionCapacity {}
+
+extension Array: MutationCollectionAppend {}
+
+extension ArraySlice: MutationCollectionAppend {}
 
 extension Array: MutationCollectionRemove {}
 

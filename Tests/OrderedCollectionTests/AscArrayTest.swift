@@ -16,6 +16,8 @@ final class AscArrayTest: XCTestCase {
 
         XCTAssertEqual(ascArray, ascArray2)
 
+        XCTAssertTrue(ascArray == [0, 1, 2, 3, 4])
+
         XCTAssertNotEqual(try! AscArray([0, 1, 2, 3, 4]), try! AscArray([0, 1, 2, 3, 4, 5]))
         XCTAssertNotEqual(try! AscArray([1, 2, 3, 4]), try! AscArray([0, 1, 2, 3, 4]))
 
@@ -87,8 +89,18 @@ final class AscArrayTest: XCTestCase {
 
     func testSlice() {
         let array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+
+        var test = [1, 2, 3, 4, 5, 6, 7, 8]
+        var testSlice = test[1 ..< 6]
+        XCTAssertEqual(testSlice, [2, 3, 4, 5, 6])
+        testSlice = testSlice[2 ..< 4]
+        XCTAssertEqual(testSlice, [3, 4])
+
         let slice = array[1 ..< 6]
         XCTAssertEqual(Array(slice), [2, 3, 4, 5, 6])
+
+        let subSlice = slice[2 ..< 4]
+        XCTAssertEqual(Array(subSlice), [3, 4])
     }
 
     func testReverse() {

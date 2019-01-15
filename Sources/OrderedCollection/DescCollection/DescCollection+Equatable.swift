@@ -13,3 +13,15 @@ extension DescCollection: Equatable where Buffer: Equatable {
         return lhs.buffer == rhs.buffer
     }
 }
+
+extension DescCollection where Buffer: Equatable {
+    public
+    static func == (lhs: DescCollection, rhs: Buffer) -> Bool {
+        return lhs.buffer == rhs
+    }
+
+    public
+    static func == (lhs: Buffer, rhs: DescCollection) -> Bool {
+        return lhs == rhs.buffer
+    }
+}

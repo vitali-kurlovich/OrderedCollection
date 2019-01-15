@@ -7,19 +7,21 @@
 
 import Foundation
 
-extension AscCollection where Buffer == [Element] {
+// MutationCollectionAppend
+
+extension AscCollection where Buffer: MutationCollectionAppend {
     public
-    mutating func append(element: Element) throws {
+    mutating func append(_ newElement: Element) throws {
         guard let last = self.last else {
-            buffer.append(element)
+            buffer.append(newElement)
             return
         }
 
-        guard last <= element else {
+        guard last <= newElement else {
             throw OrderedCollectionError.IncorrectValueError
         }
 
-        buffer.append(element)
+        buffer.append(newElement)
     }
 
     public
