@@ -25,18 +25,6 @@ extension Array where Element: Comparable {
 
 extension AscCollection where Buffer == [Element] {
     public
-    var capacity: Int {
-        return buffer.capacity
-    }
-
-    public mutating
-    func reserveCapacity(_ minimumCapacity: Int) {
-        buffer.reserveCapacity(minimumCapacity)
-    }
-}
-
-extension AscCollection where Buffer == [Element] {
-    public
     init<S>(_ sequence: S) throws where Element == S.Element, S: Sequence {
         _ = try checkAscCollection(sequence)
         self.init(buffer: Array<Element>(sequence))

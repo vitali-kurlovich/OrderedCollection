@@ -14,6 +14,10 @@ import OrderedCollection
 final class AscArrayMutationTest: XCTestCase {
     func testAppend() {
         var emptyArray = AscArray<Int>()
+
+        emptyArray.reserveCapacity(100)
+        XCTAssertEqual(emptyArray.capacity, 100)
+
         try? emptyArray.append(element: 2)
         try? emptyArray.append(element: 3)
         XCTAssertThrowsError(try emptyArray.append(element: 2))
@@ -33,23 +37,24 @@ final class AscArrayMutationTest: XCTestCase {
         var emptyArray = AscArray<Int>()
 
         try? emptyArray.append(contentsOf: [0, 1, 2])
-        XCTAssert(Array(emptyArray) == [0, 1, 2])
+
+        XCTAssertEqual(Array(emptyArray), [0, 1, 2])
 
         try? emptyArray.append(contentsOf: [3, 4, 5])
-        XCTAssert(Array(emptyArray) == [0, 1, 2, 3, 4, 5])
+        XCTAssertEqual(Array(emptyArray), [0, 1, 2, 3, 4, 5])
 
         try? emptyArray.append(contentsOf: AscArray([6, 7, 8]))
-        XCTAssert(Array(emptyArray) == [0, 1, 2, 3, 4, 5, 6, 7, 8])
+        XCTAssertEqual(Array(emptyArray), [0, 1, 2, 3, 4, 5, 6, 7, 8])
 
         XCTAssertThrowsError(try emptyArray.append(contentsOf: [2, 3]))
         XCTAssertThrowsError(try emptyArray.append(contentsOf: AscArray([6, 7, 8])))
 
         try? emptyArray.append(contentsOf: [9, 10])
-        XCTAssert(Array(emptyArray) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        XCTAssertEqual(Array(emptyArray), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
         emptyArray = AscArray<Int>()
         try? emptyArray.append(contentsOf: AscArray([0, 1, 2]))
-        XCTAssert(Array(emptyArray) == [0, 1, 2])
+        XCTAssertEqual(Array(emptyArray), [0, 1, 2])
     }
 
     func testInsertCollection() {
@@ -133,13 +138,40 @@ final class AscArrayMutationTest: XCTestCase {
 
         result = array.removeLast()
         XCTAssertEqual(result, 10)
-        XCTAssert(Array(array) == [6, 7, 9])
-        
+        XCTAssertEqual(Array(array), [6, 7, 9])
+
         array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
-        var slice = array[0..<5]
-        XCTAssert(Array(slice) == [ 1, 2, 3, 4, 5])
+        var slice = array[0 ..< 5]
+        XCTAssertEqual(Array(slice), [1, 2, 3, 4, 5])
         result = slice.remove(at: 2)
         XCTAssertEqual(result, 3)
-        XCTAssertEqual(Array(slice), [ 1, 2, 4, 5])
+        XCTAssertEqual(Array(slice), [1, 2, 4, 5])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        array.removeLast(3)
+        XCTAssertEqual(Array(array), [1, 2, 3, 4, 5])
+        array.removeAll()
+        XCTAssertEqual(Array(array), [Int]())
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        array.removeSubrange(2 ..< 5)
+        XCTAssertEqual(Array(array), [1, 2, 6, 7, 8])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        array.removeFirst(4)
+        XCTAssertEqual(Array(array), [5, 6, 7, 8])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        result = array.removeFirst()
+        XCTAssertEqual(result, 1)
+        XCTAssertEqual(Array(array), [2, 3, 4, 5, 6, 7, 8])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        array.removeSubrange(1 ... 3)
+        XCTAssertEqual(Array(array), [1, 5, 6, 7, 8])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        array.removeSubrange(...3)
+        XCTAssertEqual(Array(array), [5, 6, 7, 8])
     }
 }

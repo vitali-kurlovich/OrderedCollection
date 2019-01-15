@@ -25,18 +25,6 @@ extension Array where Element: Comparable {
 
 extension DescCollection where Buffer == [Element] {
     public
-    var capacity: Int {
-        return buffer.capacity
-    }
-
-    public mutating
-    func reserveCapacity(_ minimumCapacity: Int) {
-        buffer.reserveCapacity(minimumCapacity)
-    }
-}
-
-extension DescCollection where Buffer == [Element] {
-    public
     init<S>(_ sequence: S) throws where Element == S.Element, S: Sequence {
         _ = try checkDescCollection(sequence)
         self.init(buffer: Array<Element>(sequence))
@@ -64,5 +52,3 @@ extension DescCollection where Buffer == [Element] {
         self.init(buffer: [Element]())
     }
 }
-
-

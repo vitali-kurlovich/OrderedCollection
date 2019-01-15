@@ -7,10 +7,9 @@
 
 import Foundation
 
-extension AscCollection : Hashable where Buffer : Hashable {
-    
+extension AscCollection: Hashable where Buffer: Hashable {
     public var hashValue: Int { return buffer.hashValue }
-    
+
     public func hash(into hasher: inout Hasher) {
         buffer.hash(into: &hasher)
     }

@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+extension DescCollection: MutationCollectionCapacity where Buffer: MutationCollectionCapacity {
+    public
+    var capacity: Int {
+        return buffer.capacity
+    }
+
+    public mutating
+    func reserveCapacity(_ minimumCapacity: Int) {
+        buffer.reserveCapacity(minimumCapacity)
+    }
+}

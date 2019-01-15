@@ -37,7 +37,6 @@ extension AscCollection {
     }
 }
 
-
 extension AscCollection {
     public
     func elementsEqual<OtherSequence>(_ other: OtherSequence) -> Bool where OtherSequence: Sequence, Element == OtherSequence.Element {
