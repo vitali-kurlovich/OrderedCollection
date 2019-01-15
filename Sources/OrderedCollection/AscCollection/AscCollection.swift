@@ -37,15 +37,6 @@ extension AscCollection {
     }
 }
 
-extension AscCollection {
-    public
-    func elementsEqual<OtherSequence>(_ other: OtherSequence) -> Bool where OtherSequence: Sequence, Element == OtherSequence.Element {
-        return buffer.elementsEqual(other)
-    }
-}
-
-// extension AscCollection where Buffer == ReversedCollection<[Element]> {}
-
 extension AscCollection: BidirectionalCollection {
     public
     typealias Element = Buffer.Element

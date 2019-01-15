@@ -25,3 +25,10 @@ extension DescCollection where Buffer: Equatable {
         return lhs == rhs.buffer
     }
 }
+
+extension DescCollection {
+    public
+    func elementsEqual<OtherSequence>(_ other: OtherSequence) -> Bool where OtherSequence: Sequence, Element == OtherSequence.Element {
+        return buffer.elementsEqual(other)
+    }
+}

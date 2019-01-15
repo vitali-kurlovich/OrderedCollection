@@ -25,3 +25,10 @@ extension AscCollection where Buffer: Equatable {
         return lhs == rhs.buffer
     }
 }
+
+extension AscCollection {
+    public
+    func elementsEqual<OtherSequence>(_ other: OtherSequence) -> Bool where OtherSequence: Sequence, Element == OtherSequence.Element {
+        return buffer.elementsEqual(other)
+    }
+}

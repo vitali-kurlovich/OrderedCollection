@@ -7,9 +7,7 @@
 
 import Foundation
 
-// MutationCollectionAppend
-
-extension AscCollection where Buffer: MutationCollectionAppend {
+extension AscCollection where Buffer: MutationCollectionAppend, Buffer: Equatable {
     public
     mutating func append(_ newElement: Element) throws {
         guard let last = self.last else {
@@ -44,7 +42,7 @@ extension AscCollection where Buffer: MutationCollectionAppend {
     }
 
     public
-    mutating func append(contentsOf newElements: AscCollection) throws {
+    mutating func append(contentsOf newElements: AscCollection<Element, Buffer>) throws {
         guard newElements.count > 0 else { return }
 
         if count == 0 {
@@ -52,8 +50,7 @@ extension AscCollection where Buffer: MutationCollectionAppend {
             return
         }
 
-        let first = newElements.first!
-        guard last! <= first else {
+        guard self <= newElements else {
             throw OrderedCollectionError.IncorrectValueError
         }
 
