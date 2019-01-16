@@ -5,8 +5,6 @@
 //  Created by Vitali Kurlovich on 1/15/19.
 //
 
-import Foundation
-
 extension AscCollection: MutationCollectionRemove where Buffer: MutationCollectionRemove {
     public
     mutating func remove(at index: Int) -> Element {

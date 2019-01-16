@@ -7,6 +7,7 @@
 
 import Foundation
 
+@usableFromInline
 internal
 func checkDescCollection<C, Element: Comparable>(_ newElements: C) throws -> Element? where C: Sequence, Element == C.Element {
     var iterator = newElements.makeIterator()

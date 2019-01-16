@@ -41,7 +41,9 @@ final class AscArrayMutationAppendTest: XCTestCase {
 
         try? emptyArray.append(contentsOf: [0, 1, 2])
 
-        XCTAssertEqual(Array(emptyArray), [0, 1, 2])
+        XCTAssert(emptyArray == [0, 1, 2])
+        try? emptyArray.append(contentsOf: [])
+        XCTAssert(emptyArray == [0, 1, 2])
 
         try? emptyArray.append(contentsOf: [3, 4, 5])
         XCTAssertEqual(Array(emptyArray), [0, 1, 2, 3, 4, 5])

@@ -8,7 +8,7 @@
 import Foundation
 
 extension Sequence where Self.Element: Comparable {
-    public
+    @inlinable public
     func minmax() -> (min: Self.Element, max: Self.Element)? {
         var iterator = makeIterator()
 

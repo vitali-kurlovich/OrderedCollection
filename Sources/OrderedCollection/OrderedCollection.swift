@@ -15,6 +15,7 @@ enum OrderedCollectionError: Error {
 
 public
 protocol OrderedCollection: BinarySearch {
+    @inlinable
     var isAscending: Bool { get }
 }
 
@@ -102,64 +103,5 @@ extension OrderedCollection {
             return nil
         }
         return (min: min, max: max)
-    }
-}
-
-public
-protocol OrderedCollectionComparable: Comparable {}
-
-public
-extension OrderedCollectionComparable where Self: OrderedCollection {
-    static func < (lhs: Self, rhs: Self) -> Bool {
-        guard let left = lhs.last else {
-            if rhs.first == nil {
-                return false
-            }
-            return true
-        }
-
-        guard let right = rhs.first else {
-            return false
-        }
-        return left < right
-    }
-
-    static func <= (lhs: Self, rhs: Self) -> Bool {
-        guard let left = lhs.last else {
-            return true
-        }
-
-        guard let right = rhs.first else {
-            return false
-        }
-
-        return left <= right
-    }
-
-    static func >= (lhs: Self, rhs: Self) -> Bool {
-        guard let left = lhs.last else {
-            if rhs.first == nil {
-                return true
-            }
-            return false
-        }
-
-        guard let right = rhs.first else {
-            return true
-        }
-
-        return left >= right
-    }
-
-    static func > (lhs: Self, rhs: Self) -> Bool {
-        guard let left = lhs.last else {
-            return false
-        }
-
-        guard let right = rhs.first else {
-            return true
-        }
-
-        return left > right
     }
 }

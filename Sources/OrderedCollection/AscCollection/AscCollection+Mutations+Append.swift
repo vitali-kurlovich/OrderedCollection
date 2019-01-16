@@ -5,17 +5,15 @@
 //  Created by Vitali Kurlovich on 1/15/19.
 //
 
-import Foundation
-
 extension AscCollection where Buffer: MutationCollectionAppend, Buffer: Equatable {
     public
     mutating func append(_ newElement: Element) throws {
-        guard let last = self.last else {
+        guard let left = self.last else {
             buffer.append(newElement)
             return
         }
 
-        guard last <= newElement else {
+        guard left <= newElement else {
             throw OrderedCollectionError.IncorrectValueError
         }
 
@@ -26,12 +24,12 @@ extension AscCollection where Buffer: MutationCollectionAppend, Buffer: Equatabl
     mutating func append<S>(contentsOf newElements: S) throws where Element == S.Element, S: Sequence {
         var iterator = newElements.makeIterator()
 
-        guard let left = iterator.next() else {
+        guard let right = iterator.next() else {
             return
         }
 
-        if let last = last {
-            guard last <= left else {
+        if let left = last {
+            guard left <= right else {
                 throw OrderedCollectionError.IncorrectValueError
             }
         }
@@ -43,14 +41,16 @@ extension AscCollection where Buffer: MutationCollectionAppend, Buffer: Equatabl
 
     public
     mutating func append(contentsOf newElements: AscCollection<Element, Buffer>) throws {
-        guard newElements.count > 0 else { return }
+        guard let right = newElements.first else {
+            return
+        }
 
-        if count == 0 {
+        guard let left = self.last else {
             buffer = newElements.buffer
             return
         }
 
-        guard self <= newElements else {
+        guard left <= right else {
             throw OrderedCollectionError.IncorrectValueError
         }
 
