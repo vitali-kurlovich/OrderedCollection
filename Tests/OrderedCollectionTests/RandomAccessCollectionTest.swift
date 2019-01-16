@@ -140,9 +140,9 @@ final class RandomAccessCollectionTest: XCTestCase {
                 test.append(Int.random(in: 0 ..< (count * 1000 * (i + 1))))
             }
 
-            let minmax = test.minmax()
-            XCTAssertEqual(test.min(), minmax.min)
-            XCTAssertEqual(test.max(), minmax.max)
+            let minmax = test.minmax()!
+            XCTAssertEqual(test.min()!, minmax.min)
+            XCTAssertEqual(test.max()!, minmax.max)
         }
     }
 }
