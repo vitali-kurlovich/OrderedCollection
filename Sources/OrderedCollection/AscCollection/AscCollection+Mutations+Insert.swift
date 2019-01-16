@@ -7,7 +7,9 @@
 
 import Foundation
 
-extension AscCollection where Buffer == [Element] {
+extension AscCollection where Buffer: MutationCollectionInsert,
+    Buffer: Equatable,
+    Buffer.Index == Int {
     public
     mutating func insert(_ newElement: Element, at i: Int) throws {
         if count == 0 {

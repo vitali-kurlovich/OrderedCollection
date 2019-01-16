@@ -31,6 +31,40 @@ protocol MutationCollectionAppend {
 }
 
 public
+protocol MutationCollectionInsert {
+    associatedtype Element
+
+    /// Inserts a new element at the specified position.
+    ///
+    /// The new element is inserted before the element currently at the specified
+    /// index. If you pass the array's `endIndex` property as the `index`
+    /// parameter, the new element is appended to the collection.
+    ///
+    /// - Parameter newElement: The new element to insert into the array.
+    /// - Parameter i: The position at which to insert the new element.
+    ///   `index` must be a valid index of the collection or equal to its `endIndex`
+    ///   property.
+    mutating func insert(_ newElement: Element, at i: Int)
+
+    /// Inserts the elements of a sequence into the collection at the specified
+    /// position.
+    ///
+    /// The new elements are inserted before the element currently at the
+    /// specified index. If you pass the collection's `endIndex` property as the
+    /// `index` parameter, the new elements are appended to the collection.
+    ///
+    ///
+    /// - Parameter newElements: The new elements to insert into the collection.
+    /// - Parameter i: The position at which to insert the new elements. `index`
+    ///   must be a valid index of the collection.
+    ///
+    /// - Complexity: O(*n* + *m*), where *n* is length of this collection and
+    ///   *m* is the length of `newElements`. If `i == endIndex`, this method
+    ///   is equivalent to `append(contentsOf:)`.
+    mutating func insert<C>(contentsOf newElements: C, at i: Int) where C: Collection, Element == C.Element
+}
+
+public
 protocol MutationCollectionRemove {
     associatedtype Element
 
@@ -120,13 +154,13 @@ func foof() {
 }
 
 extension Array: MutationCollectionCapacity {}
-
 extension ArraySlice: MutationCollectionCapacity {}
 
 extension Array: MutationCollectionAppend {}
-
 extension ArraySlice: MutationCollectionAppend {}
 
 extension Array: MutationCollectionRemove {}
-
 extension ArraySlice: MutationCollectionRemove {}
+
+extension Array: MutationCollectionInsert {}
+extension ArraySlice: MutationCollectionInsert {}
