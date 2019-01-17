@@ -65,6 +65,25 @@ protocol MutationCollectionInsert {
 }
 
 public
+protocol MutationCollectionReplace {
+    associatedtype Element
+
+    /// Replaces the specified subrange of elements with the given collection.
+    ///
+    /// - Parameters:
+    ///   - subrange: The subrange of the collection to replace. The bounds of
+    ///     the range must be valid indices of the collection.
+    ///   - newElements: The new elements to add to the collection.
+    ///
+    /// - Complexity: O(*n* + *m*), where *n* is length of this collection and
+    ///   *m* is the length of `newElements`. If the call to this method simply
+    ///   appends the contents of `newElements` to the collection, the complexity
+    ///   is O(*m*).
+    mutating
+    func replaceSubrange<C, R>(_ subrange: R, with newElements: C) where C: Collection, R: RangeExpression, Element == C.Element, Array<Element>.Index == R.Bound
+}
+
+public
 protocol MutationCollectionRemove {
     associatedtype Element
 
@@ -161,6 +180,9 @@ extension ArraySlice: MutationCollectionAppend {}
 
 extension Array: MutationCollectionRemove {}
 extension ArraySlice: MutationCollectionRemove {}
+
+extension Array: MutationCollectionReplace {}
+extension ArraySlice: MutationCollectionReplace {}
 
 extension Array: MutationCollectionInsert {}
 extension ArraySlice: MutationCollectionInsert {}
