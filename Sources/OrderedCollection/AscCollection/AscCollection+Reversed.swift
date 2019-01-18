@@ -5,9 +5,6 @@
 //  Created by Vitali Kurlovich on 1/14/19.
 //
 
-import Foundation
-
-// DescCollection+Reversed
 extension AscCollection {
     public
     func reversed() -> DescCollection<Element, ReversedCollection<Buffer>> {

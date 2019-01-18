@@ -36,7 +36,7 @@ final class DescArrayTest: XCTestCase {
     }
 
     func testContains() {
-        let array = try! DescArray([8, 7, 6, 5, 4, 3, 2, 1])
+        var array = try! DescArray([8, 7, 6, 5, 4, 3, 2, 1])
 
         XCTAssertTrue(array.contains(1))
         XCTAssertTrue(array.contains(2))
@@ -62,6 +62,20 @@ final class DescArrayTest: XCTestCase {
 
         XCTAssertFalse(array.contains(less: 1))
         XCTAssertFalse(array.contains(greater: 8))
+
+        array = try! DescArray([8, 7, 6, 5, 5, 5, 4, 3, 2, 1])
+
+        XCTAssertEqual(array.firstIndex(of: 5), 3)
+        XCTAssertNil(array.firstIndex(of: 9))
+
+        XCTAssertEqual(array.lastIndex(of: 5), 5)
+        XCTAssertNil(array.lastIndex(of: 9))
+
+        XCTAssert(array.dropFirst() == [7, 6, 5, 5, 5, 4, 3, 2, 1])
+        XCTAssert(array.dropLast() == [8, 7, 6, 5, 5, 5, 4, 3, 2])
+
+        XCTAssert(array.dropFirst().dropFirst() == [6, 5, 5, 5, 4, 3, 2, 1])
+        XCTAssert(array.dropLast().dropLast() == [8, 7, 6, 5, 5, 5, 4, 3])
     }
 
     func testMinMax() {

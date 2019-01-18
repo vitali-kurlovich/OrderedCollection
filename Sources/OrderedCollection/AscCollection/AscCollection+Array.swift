@@ -52,3 +52,27 @@ extension AscCollection where Buffer == [Element] {
         self.init(buffer: [Element]())
     }
 }
+
+extension AscCollection where Buffer == [Element] {
+    public func dropFirst() -> AscArraySlice<Element> {
+        let slice = buffer.dropFirst()
+        return AscArraySlice(buffer: slice)
+    }
+
+    public func dropLast() -> AscArraySlice<Element> {
+        let slice = buffer.dropLast()
+        return AscArraySlice(buffer: slice)
+    }
+}
+
+extension AscCollection where Buffer == ArraySlice<Element> {
+    public func dropFirst() -> AscArraySlice<Element> {
+        let slice = buffer.dropFirst()
+        return AscArraySlice(buffer: slice)
+    }
+
+    public func dropLast() -> AscArraySlice<Element> {
+        let slice = buffer.dropLast()
+        return AscArraySlice(buffer: slice)
+    }
+}

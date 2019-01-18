@@ -52,3 +52,27 @@ extension DescCollection where Buffer == [Element] {
         self.init(buffer: [Element]())
     }
 }
+
+extension DescCollection where Buffer == [Element] {
+    public func dropFirst() -> DescArraySlice<Element> {
+        let slice = buffer.dropFirst()
+        return DescArraySlice(buffer: slice)
+    }
+
+    public func dropLast() -> DescArraySlice<Element> {
+        let slice = buffer.dropLast()
+        return DescArraySlice(buffer: slice)
+    }
+}
+
+extension DescCollection where Buffer == ArraySlice<Element> {
+    public func dropFirst() -> DescArraySlice<Element> {
+        let slice = buffer.dropFirst()
+        return DescArraySlice(buffer: slice)
+    }
+
+    public func dropLast() -> DescArraySlice<Element> {
+        let slice = buffer.dropLast()
+        return DescArraySlice(buffer: slice)
+    }
+}

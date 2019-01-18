@@ -69,6 +69,35 @@ extension OrderedCollection {
 
 public
 extension OrderedCollection {
+    /// Returns the first index where the specified value appears in the
+    /// collection.
+    ///
+    /// - Parameter element: An element to search for in the collection.
+    /// - Returns: The first index where `element` is found. If `element` is not
+    ///   found in the collection, returns `nil`.
+    ///
+    /// - Complexity: O(*ln(n)*), where *n* is the length of the collection.
+    func firstIndex(of element: Element) -> Self.Index? {
+        let range = binarySearch(equal: element, reverse: !isAscending)
+        return range?.first
+    }
+
+    /// Returns the last index where the specified value appears in the
+    /// collection.
+    ///
+    /// - Parameter element: An element to search for in the collection.
+    /// - Returns: The last index where `element` is found. If `element` is not
+    ///   found in the collection, this method returns `nil`.
+    ///
+    /// - Complexity: O(*ln(n)*), where *n* is the length of the collection.
+    public func lastIndex(of element: Element) -> Self.Index? {
+        let range = binarySearch(equal: element, reverse: !isAscending)
+        return range?.last
+    }
+}
+
+public
+extension OrderedCollection {
     /// Returns the minimum element in the collection.
     ///
     /// - Returns: The collection's minimum element. If the collection has no
@@ -76,6 +105,7 @@ extension OrderedCollection {
     ///
     /// - Complexity: O(*1*)
 
+    @inlinable
     func min() -> Self.Element? {
         guard count > 0 else { return nil }
         if isAscending {
@@ -90,6 +120,7 @@ extension OrderedCollection {
     ///   elements, returns `nil`.
     ///
     /// - Complexity: O(*1*)
+    @inlinable
     func max() -> Self.Element? {
         guard count > 0 else { return nil }
         if isAscending {
@@ -98,6 +129,7 @@ extension OrderedCollection {
         return first
     }
 
+    @inlinable
     func minmax() -> (min: Self.Element, max: Self.Element)? {
         guard let min = min(), let max = max() else {
             return nil

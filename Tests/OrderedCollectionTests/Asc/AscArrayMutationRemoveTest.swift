@@ -52,6 +52,16 @@ final class AscArrayMutationRemoveTest: XCTestCase {
 
         array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
         array.removeSubrange(...3)
-        XCTAssertEqual(Array(array), [5, 6, 7, 8])
+        XCTAssert(array == [5, 6, 7, 8])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        array.removeAll { (element) -> Bool in
+            return element % 2 == 1
+        }
+        XCTAssert(array == [2, 4, 6, 8])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        XCTAssertEqual(array.popLast(), 8)
+        XCTAssert(array == [1, 2, 3, 4, 5, 6, 7])
     }
 }

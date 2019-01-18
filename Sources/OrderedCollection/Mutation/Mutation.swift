@@ -157,11 +157,29 @@ protocol MutationCollectionRemove {
     /// - Complexity: O(*n*), where *n* is the length of the collection.
     mutating
     func removeSubrange<R>(_ bounds: R) where R: RangeExpression, Array<Element>.Index == R.Bound
+
+    /// Removes all the elements that satisfy the given predicate.
+    ///
+    /// - Parameter predicate: A closure that takes an element of the
+    ///   sequence as its argument and returns a Boolean value indicating
+    ///   whether the element should be removed from the collection.
+    ///
+    /// - Complexity: O(*n*), where *n* is the length of the collection.
+    mutating
+    func removeAll(where predicate: (Element) throws -> Bool) rethrows
+
+    /// Removes and returns the last element of the collection.
+    ///
+    /// - Returns: The last element of the collection if the collection is not
+    /// empty; otherwise, `nil`.
+    ///
+    /// - Complexity: O(1)
+    mutating func popLast() -> Element?
 }
 
 func foof() {
     var array = [0, 2]
-    array.append(3)
+    array.dropLast()
 }
 
 extension Array: MutationCollectionCapacity {}

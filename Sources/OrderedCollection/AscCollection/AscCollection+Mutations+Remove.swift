@@ -40,4 +40,14 @@ extension AscCollection: MutationCollectionRemove where Buffer: MutationCollecti
     mutating func removeSubrange<R>(_ bounds: R) where R: RangeExpression, Array<Element>.Index == R.Bound {
         buffer.removeSubrange(bounds)
     }
+
+    public
+    mutating func removeAll(where predicate: (Element) throws -> Bool) rethrows {
+        try buffer.removeAll(where: predicate)
+    }
+
+    public
+    mutating func popLast() -> Element? {
+        return buffer.popLast()
+    }
 }

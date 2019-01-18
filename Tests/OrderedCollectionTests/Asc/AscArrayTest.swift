@@ -38,7 +38,7 @@ final class AscArrayTest: XCTestCase {
     }
 
     func testContains() {
-        let array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        var array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
 
         XCTAssertTrue(array.contains(1))
         XCTAssertTrue(array.contains(2))
@@ -63,6 +63,20 @@ final class AscArrayTest: XCTestCase {
 
         XCTAssertFalse(array.contains(less: 1))
         XCTAssertFalse(array.contains(greater: 8))
+
+        array = try! AscArray([1, 2, 3, 4, 5, 5, 5, 6, 7, 8])
+
+        XCTAssertEqual(array.firstIndex(of: 5), 4)
+        XCTAssertNil(array.firstIndex(of: 9))
+
+        XCTAssertEqual(array.lastIndex(of: 5), 6)
+        XCTAssertNil(array.lastIndex(of: 9))
+
+        XCTAssert(array.dropFirst() == [2, 3, 4, 5, 5, 5, 6, 7, 8])
+        XCTAssert(array.dropLast() == [1, 2, 3, 4, 5, 5, 5, 6, 7])
+
+        XCTAssert(array.dropFirst().dropFirst() == [3, 4, 5, 5, 5, 6, 7, 8])
+        XCTAssert(array.dropLast().dropLast() == [1, 2, 3, 4, 5, 5, 5, 6])
     }
 
     func testMinMax() {
