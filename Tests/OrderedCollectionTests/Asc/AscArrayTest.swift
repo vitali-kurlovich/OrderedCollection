@@ -94,13 +94,12 @@ final class AscArrayTest: XCTestCase {
         var testSlice = test[1 ..< 6]
         XCTAssertEqual(testSlice, [2, 3, 4, 5, 6])
         testSlice = testSlice[2 ..< 4]
-        XCTAssertEqual(testSlice, [3, 4])
+        XCTAssert(testSlice == [3, 4])
 
         let slice = array[1 ..< 6]
-        XCTAssertEqual(Array(slice), [2, 3, 4, 5, 6])
-
-        let subSlice = slice[2 ..< 4]
-        XCTAssertEqual(Array(subSlice), [3, 4])
+        XCTAssert(slice == [2, 3, 4, 5, 6])
+        XCTAssert(slice[2 ..< 4] == [3, 4])
+        XCTAssert(slice[2 ... 4] == [3, 4, 5])
     }
 
     func testReverse() {

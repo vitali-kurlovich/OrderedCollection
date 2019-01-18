@@ -5,12 +5,20 @@
 //  Created by Vitali Kurlovich on 1/15/19.
 //
 
-import Foundation
 
 extension DescCollection where Buffer == [Element] {
     public
-    subscript(bounds: Range<Int>) -> DescCollection<Element, ArraySlice<Element>> {
-        let slice = buffer[bounds]
+    subscript<R>(_ subrange: R) -> DescCollection<Element, ArraySlice<Element>> where R: RangeExpression, Index == R.Bound {
+        let slice = buffer[subrange]
+        return DescCollection<Element, ArraySlice<Element>>(buffer: slice)
+    }
+}
+
+
+extension DescCollection where Buffer == ArraySlice<Element> {
+    public
+    subscript<R>(_ subrange: R) -> DescCollection<Element, ArraySlice<Element>> where R: RangeExpression, Index == R.Bound {
+        let slice = buffer[subrange]
         return DescCollection<Element, ArraySlice<Element>>(buffer: slice)
     }
 }

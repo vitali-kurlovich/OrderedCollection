@@ -89,7 +89,9 @@ final class DescArrayTest: XCTestCase {
     func testSlice() {
         let array = try! DescArray([8, 7, 6, 5, 4, 3, 2, 1])
         let slice = array[1 ..< 6]
-        XCTAssertEqual(Array(slice), [7, 6, 5, 4, 3])
+        XCTAssert(slice == [7, 6, 5, 4, 3])
+        
+        XCTAssert(slice[2...] == [6, 5, 4, 3])
     }
 
     func testReverse() {

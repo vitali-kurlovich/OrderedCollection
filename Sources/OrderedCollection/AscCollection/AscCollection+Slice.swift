@@ -5,20 +5,20 @@
 //  Created by Vitali Kurlovich on 1/15/19.
 //
 
-import Foundation
 
 extension AscCollection where Buffer == [Element] {
     public
-    subscript(bounds: Range<Int>) -> AscCollection<Element, ArraySlice<Element>> {
-        let slice = buffer[bounds]
+    subscript<R>(_ subrange: R) -> AscCollection<Element, ArraySlice<Element>> where R: RangeExpression, Index == R.Bound {
+        let slice = buffer[subrange]
         return AscCollection<Element, ArraySlice<Element>>(buffer: slice)
     }
 }
 
+
 extension AscCollection where Buffer == ArraySlice<Element> {
     public
-    subscript(bounds: Range<Int>) -> AscCollection<Element, ArraySlice<Element>> {
-        let slice = buffer[bounds]
+    subscript<R>(_ subrange: R) -> AscCollection<Element, ArraySlice<Element>> where R: RangeExpression, Index == R.Bound {
+        let slice = buffer[subrange]
         return AscCollection<Element, ArraySlice<Element>>(buffer: slice)
     }
 }
