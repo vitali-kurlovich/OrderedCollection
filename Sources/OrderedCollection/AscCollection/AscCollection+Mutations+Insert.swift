@@ -5,8 +5,6 @@
 //  Created by Vitali Kurlovich on 1/15/19.
 //
 
-import Foundation
-
 extension AscCollection where Buffer: MutationCollectionInsert,
     Buffer: Equatable,
     Buffer.Index == Int {

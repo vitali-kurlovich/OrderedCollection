@@ -16,6 +16,10 @@ final class AscArrayMutationReplaceTest: XCTestCase {
         XCTAssert(array.canReplace(0 ... 1, with: [0, 1, 2]))
         XCTAssert(array.canReplace(0 ... 2, with: [0, 1, 2]))
 
+        XCTAssertFalse(array.canReplace(0..., with: [0, 1, 0]))
+        XCTAssertFalse(array.canReplace(0 ... 1, with: [0, 1, 0]))
+        XCTAssertFalse(array.canReplace(0 ... 2, with: [0, 1, 0]))
+
         XCTAssertFalse(array.canReplace(1..., with: [0, 1, 2]))
         XCTAssertFalse(array.canReplace(1 ... 1, with: [0, 1, 2]))
         XCTAssertFalse(array.canReplace(1 ..< 2, with: [0, 1, 2]))
@@ -72,24 +76,39 @@ final class AscArrayMutationReplaceTest: XCTestCase {
         try? array.replaceSubrange(0 ... 2, with: [0, 1, 2])
         XCTAssert(array == [0, 1, 2, 4, 5, 6, 7])
 
-        array = [1, 2, 3, 4, 5, 6, 7]
-        array.replaceSubrange(0..., with: [0, 1, 2])
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7])
+        try? array.replaceSubrange(0..., with: [0, 1, 2])
         XCTAssert(array == [0, 1, 2])
 
-        array = [1, 2, 3, 4, 5, 6, 7]
-        array.replaceSubrange(0 ... 3, with: [0, 1, 2])
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7])
+        try? array.replaceSubrange(0 ... 3, with: [0, 1, 2])
         XCTAssert(array == [0, 1, 2, 5, 6, 7])
 
-        array = [1, 2, 3, 4, 5, 6, 7]
-        array.replaceSubrange(0 ..< 3, with: [0, 1, 2])
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7])
+        try? array.replaceSubrange(0 ..< 3, with: [0, 1, 2])
         XCTAssert(array == [0, 1, 2, 4, 5, 6, 7])
 
-        array = [1, 2, 3, 4, 5, 6, 7]
-        array.replaceSubrange(0..., with: [0, 1, 2])
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7])
+        try? array.replaceSubrange(0..., with: [0, 1, 2])
         XCTAssert(array == [0, 1, 2])
 
-        array = [1, 2, 3, 4, 5, 6, 7]
-        array.replaceSubrange(...1, with: [0, 1, 2])
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7])
+        try? array.replaceSubrange(...1, with: [0, 1, 2])
         XCTAssert(array == [0, 1, 2, 3, 4, 5, 6, 7])
+
+        array = try! AscArray([1, 2, 12, 13])
+        try? array.replaceSubrange(2 ..< 2, with: [3, 4, 5, 6, 7, 8, 9, 10, 11])
+        XCTAssert(array == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+
+        array = try! AscArray([1, 2, 12, 13])
+        try? array.replaceSubrange(2 ..< 2, with: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+        XCTAssert(array == [1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13])
+
+        array = try! AscArray([1, 2, 12, 13])
+        try? array.replaceSubrange(1 ... 2, with: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+        XCTAssert(array == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+
+        array = try! AscArray([1, 2, 3, 4, 5, 6, 7])
+        XCTAssertThrowsError(try array.replaceSubrange(1..., with: [0, 1, 2]))
     }
 }
