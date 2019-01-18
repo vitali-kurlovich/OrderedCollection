@@ -9,6 +9,7 @@ import Foundation
 
 internal
 extension BinarySearch {
+    @usableFromInline
     func leftRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element, reverse: Bool) -> Self.Indices.Element? {
         if !reverse {
 //            return binarySearchOneAsc(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
@@ -18,6 +19,7 @@ extension BinarySearch {
         return leftDescRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
     }
 
+    @usableFromInline
     func rightRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element, reverse: Bool) -> Self.Indices.Element? {
         if !reverse {
             return rightAscRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)

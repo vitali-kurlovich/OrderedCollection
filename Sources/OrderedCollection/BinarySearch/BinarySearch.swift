@@ -25,8 +25,7 @@ extension BinarySearch {
         guard let rightIndex = rightRange(equal: equal, leftIndex: leftIndex, rightIndex: range.last!, reverse: reverse) else {
             return nil
         }
-
-        return leftIndex ..< (rightIndex + 1) as? Self.Indices
+        return (leftIndex ... rightIndex).relative(to: self) as? Self.Indices
     }
 
     public
@@ -45,13 +44,13 @@ extension BinarySearch {
             guard let result = ascRange(less: less, leftIndex: range.first!, rightIndex: range.last!) else {
                 return nil
             }
-            return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
+            return (result.leftIndex ... result.rightIndex).relative(to: self) as? Self.Indices
         }
 
         guard let result = descRange(less: less, leftIndex: range.first!, rightIndex: range.last!) else {
             return nil
         }
-        return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
+        return (result.leftIndex ... result.rightIndex).relative(to: self) as? Self.Indices
     }
 
     public
@@ -70,13 +69,13 @@ extension BinarySearch {
             guard let result = ascRange(greater: greater, leftIndex: range.first!, rightIndex: range.last!) else {
                 return nil
             }
-            return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
+            return (result.leftIndex ... result.rightIndex).relative(to: self) as? Self.Indices
         }
 
         guard let result = descRange(greater: greater, leftIndex: range.first!, rightIndex: range.last!) else {
             return nil
         }
 
-        return result.leftIndex ..< (result.rightIndex + 1) as? Self.Indices
+        return (result.leftIndex ... result.rightIndex).relative(to: self) as? Self.Indices
     }
 }
