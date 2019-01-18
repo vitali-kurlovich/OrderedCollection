@@ -95,15 +95,6 @@ protocol MutationCollectionRemove {
     mutating
     func remove(at index: Int) -> Element
 
-    /// Removes the elements in the specified subrange from the collection.
-    ///
-    /// - Parameter bounds: The range of the collection to be removed. The
-    ///   bounds of the range must be valid indices of the collection.
-    ///
-    /// - Complexity: O(*n*), where *n* is the length of the collection.
-    mutating
-    func removeSubrange(_ bounds: Range<Int>)
-
     /// Removes and returns the last element of the collection.
     ///
     /// - Returns: The last element of the collection.
@@ -164,7 +155,8 @@ protocol MutationCollectionRemove {
     ///   bounds of the range must be valid indices of the collection.
     ///
     /// - Complexity: O(*n*), where *n* is the length of the collection.
-    mutating func removeSubrange<R>(_ bounds: R) where R: RangeExpression, Array<Element>.Index == R.Bound
+    mutating
+    func removeSubrange<R>(_ bounds: R) where R: RangeExpression, Array<Element>.Index == R.Bound
 }
 
 func foof() {

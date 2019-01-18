@@ -90,7 +90,7 @@ final class DescArrayTest: XCTestCase {
         let array = try! DescArray([8, 7, 6, 5, 4, 3, 2, 1])
         let slice = array[1 ..< 6]
         XCTAssert(slice == [7, 6, 5, 4, 3])
-        
+
         XCTAssert(slice[2...] == [6, 5, 4, 3])
     }
 

@@ -12,11 +12,6 @@ extension AscCollection: MutationCollectionRemove where Buffer: MutationCollecti
     }
 
     public
-    mutating func removeSubrange(_ bounds: Range<Int>) {
-        buffer.removeSubrange(bounds)
-    }
-
-    public
     mutating func removeFirst(_ k: Int) {
         buffer.removeFirst(k)
     }
