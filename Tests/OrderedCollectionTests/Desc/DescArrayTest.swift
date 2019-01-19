@@ -120,4 +120,34 @@ final class DescArrayTest: XCTestCase {
         XCTAssertEqual(Array(revSlice), [5, 6, 7, 8])
         XCTAssertEqual(revSlice.reversed(), slice)
     }
+
+    func testSorted() {
+        let array = try! DescArray([8, 7, 6, 5, 4, 3, 2, 1])
+        XCTAssert(array.sorted() == [1, 2, 3, 4, 5, 6, 7, 8])
+
+        XCTAssert(array[1 ... 4].sorted() == [4, 5, 6, 7])
+    }
+
+    func testUnsafeBufferPointer() {
+        let numbers = try! DescArray([5, 4, 3, 2, 1])
+        let sum = numbers.withUnsafeBufferPointer { buffer -> Int in
+            var result = 0
+            for i in stride(from: buffer.startIndex, to: buffer.endIndex, by: 2) {
+                result += buffer[i]
+            }
+            return result
+        }
+
+        XCTAssertEqual(sum, 9)
+    }
+
+    func testUnsafeBytes() {
+        let numbers = try! DescArray([Int16(3), Int16(2), Int16(1)])
+        var byteBuffer: [UInt8] = []
+        numbers.withUnsafeBytes {
+            byteBuffer.append(contentsOf: $0)
+        }
+
+        XCTAssert(byteBuffer == [3, 0, 2, 0, 1, 0])
+    }
 }

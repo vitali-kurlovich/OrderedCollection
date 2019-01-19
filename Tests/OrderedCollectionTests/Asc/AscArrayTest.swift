@@ -128,4 +128,34 @@ final class AscArrayTest: XCTestCase {
         XCTAssertEqual(Array(revSlice), [4, 3, 2, 1])
         XCTAssertEqual(revSlice.reversed(), slice)
     }
+
+    func testSorted() {
+        let array = try! AscArray([1, 2, 3, 4, 5, 6, 7, 8])
+        XCTAssert(array.sorted() == [1, 2, 3, 4, 5, 6, 7, 8])
+
+        XCTAssert(array[1 ... 4].sorted() == [2, 3, 4, 5])
+    }
+
+    func testUnsafeBufferPointer() {
+        let numbers = try! AscArray([1, 2, 3, 4, 5])
+        let sum = numbers.withUnsafeBufferPointer { buffer -> Int in
+            var result = 0
+            for i in stride(from: buffer.startIndex, to: buffer.endIndex, by: 2) {
+                result += buffer[i]
+            }
+            return result
+        }
+
+        XCTAssertEqual(sum, 9)
+    }
+
+    func testUnsafeBytes() {
+        let numbers = try! AscArray([Int16(1), Int16(2), Int16(3)])
+        var byteBuffer: [UInt8] = []
+        numbers.withUnsafeBytes {
+            byteBuffer.append(contentsOf: $0)
+        }
+
+        XCTAssert(byteBuffer == [1, 0, 2, 0, 3, 0])
+    }
 }

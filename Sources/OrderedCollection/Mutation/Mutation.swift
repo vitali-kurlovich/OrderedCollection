@@ -179,7 +179,9 @@ protocol MutationCollectionRemove {
 
 func foof() {
     var array = [0, 2]
-    array.dropLast()
+//    array.withUnsafeBufferPointer { (e) -> Int in
+//
+//    }
 }
 
 extension Array: MutationCollectionCapacity {}
