@@ -34,7 +34,28 @@ extension AscCollection where Buffer: MutationCollectionAppend, Buffer: Equatabl
             }
         }
 
-        _ = try checkAscCollection(newElements)
+        guard isAscOrdered(newElements) else {
+            throw OrderedCollectionError.IncorrectValueError
+        }
+
+        buffer.append(contentsOf: newElements)
+    }
+
+    public
+    mutating func append<S>(contentsOf newElements: S) throws where Element == S.Element, S: BidirectionalCollection {
+        guard let right = newElements.first else {
+            return
+        }
+
+        if let left = last {
+            guard left <= right else {
+                throw OrderedCollectionError.IncorrectValueError
+            }
+        }
+
+        guard isAscOrdered(newElements) else {
+            throw OrderedCollectionError.IncorrectValueError
+        }
 
         buffer.append(contentsOf: newElements)
     }

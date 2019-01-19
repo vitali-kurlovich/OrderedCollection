@@ -129,6 +129,12 @@ extension OrderedCollection {
         return first
     }
 
+    /// Returns the maximum and the minimum element in the collection.
+    ///
+    /// - Returns: The collection's minimum/maximum element. If the collection has no
+    ///   elements, returns `nil`.
+    ///
+    /// - Complexity: O(*1*)
     @inlinable
     func minmax() -> (min: Self.Element, max: Self.Element)? {
         guard let min = min(), let max = max() else {

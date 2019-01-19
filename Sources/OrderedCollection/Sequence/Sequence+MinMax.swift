@@ -8,6 +8,12 @@
 import Foundation
 
 extension Sequence where Self.Element: Comparable {
+    /// Returns the maximum and the minimum element in the collection.
+    ///
+    /// - Returns: The collection's minimum/maximum element. If the collection has no
+    ///   elements, returns `nil`.
+    ///
+    /// - Complexity: O(*n*)
     @inlinable public
     func minmax() -> (min: Self.Element, max: Self.Element)? {
         var iterator = makeIterator()
