@@ -178,7 +178,8 @@ protocol MutationCollectionRemove {
 }
 
 func foof() {
-    var array = [0, 2]
+    var array = [0, 1, 2, 3, 4]
+
 //    array.withUnsafeBufferPointer { (e) -> Int in
 //
 //    }
