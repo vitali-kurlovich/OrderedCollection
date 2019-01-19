@@ -9,13 +9,21 @@ import Foundation
 
 extension BidirectionalCollection
     where Self.Element: Equatable,
-    Self.Index: SignedInteger,
-    Self.Index.Stride == Self.Index {
+    Self.Index.Stride == Self.Index, Self.Indices == Range<Self.Index> {
     public
-    func range(equal value: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
-        guard count > 0 else { return nil }
+    func range<R>(equal value: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
+        let r = range.relative(to: self)
+        return self.range(equal: value, range: r)
+    }
 
-        let range = range != nil ? range! : indices
+    public
+    func range(equal value: Self.Element) -> Self.Indices? {
+        return range(equal: value, range: indices)
+    }
+
+    private
+    func range(equal value: Self.Element, range: Range<Self.Index>) -> Self.Indices? {
+        guard count > 0 else { return nil }
 
         var l: Self.Indices.Element?
         for index in range {
@@ -38,19 +46,28 @@ extension BidirectionalCollection
             }
         }
 
-        return left ..< (right + 1) as? Self.Indices
+        return (left ... right).relative(to: self)
     }
 }
 
 extension BidirectionalCollection
     where Self.Element: Comparable,
-    Self.Index: SignedInteger,
-    Self.Index.Stride == Self.Index {
+    Self.Index.Stride == Self.Index,
+    Self.Indices == Range<Self.Index> {
     public
-    func range(less: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
-        guard count > 0 else { return nil }
+    func range<R>(less: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
+        let r = range.relative(to: self)
+        return self.range(less: less, range: r)
+    }
 
-        let range = range != nil ? range! : indices
+    public
+    func range(less: Self.Element) -> Self.Indices? {
+        return range(less: less, range: indices)
+    }
+
+    private
+    func range(less: Self.Element, range: Range<Self.Index>) -> Self.Indices? {
+        guard count > 0 else { return nil }
 
         var left: Self.Index?
         var right: Self.Index?
@@ -76,14 +93,28 @@ extension BidirectionalCollection
             return nil
         }
 
-        return leftIndex ..< (rightIndex + 1) as? Self.Indices
+        return (leftIndex ... rightIndex).relative(to: self)
+    }
+}
+
+extension BidirectionalCollection
+    where Self.Element: Comparable,
+    Self.Index.Stride == Self.Index,
+    Self.Indices == Range<Self.Index> {
+    public
+    func range<R>(greater: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
+        let r = range.relative(to: self)
+        return self.range(greater: greater, range: r)
     }
 
     public
-    func range(greater: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
-        guard count > 0 else { return nil }
+    func range(greater: Self.Element) -> Self.Indices? {
+        return range(greater: greater, range: indices)
+    }
 
-        let range = range != nil ? range! : indices
+    private
+    func range(greater: Self.Element, range: Range<Self.Index>) -> Self.Indices? {
+        guard count > 0 else { return nil }
 
         var left: Self.Index?
         var right: Self.Index?
@@ -108,6 +139,6 @@ extension BidirectionalCollection
             return nil
         }
 
-        return leftIndex ..< (rightIndex + 1) as? Self.Indices
+        return (leftIndex ... rightIndex).relative(to: self)
     }
 }

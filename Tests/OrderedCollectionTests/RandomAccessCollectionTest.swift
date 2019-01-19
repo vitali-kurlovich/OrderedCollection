@@ -13,6 +13,8 @@ final class RandomAccessCollectionTest: XCTestCase {
     func testRangeEqual() {
         var test = [0, 1, 2, 3, 4, 4, 4, 5, 6, 7, 8]
         var range = test.range(equal: 4)!
+
+        XCTAssertEqual(test.range(equal: 4, in: 1 ... 5), 4 ..< 6)
         XCTAssertEqual(range, 4 ..< 7)
         XCTAssertEqual(test[range], [4, 4, 4])
 
@@ -45,6 +47,10 @@ final class RandomAccessCollectionTest: XCTestCase {
         XCTAssertEqual(range, 0 ..< 5)
         XCTAssertEqual(test[range], [0, 1, 2, 3, 4])
 
+        range = test.range(less: 5, in: 2 ... 6)!
+        XCTAssertEqual(range, 2 ..< 5)
+        XCTAssertEqual(test[range], [2, 3, 4])
+
         test = [4]
         range = test.range(less: 5)!
         XCTAssertEqual(range, 0 ..< 1)
@@ -64,7 +70,7 @@ final class RandomAccessCollectionTest: XCTestCase {
         XCTAssertNil(test.range(less: 5))
 
         test = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        XCTAssertNil(test.range(less: 5, range: 5 ..< 9))
+        XCTAssertNil(test.range(less: 5, in: 5 ..< 9))
 
         test = [8, 7, 6, 5, 4, 3, 2, 1, 0]
         range = test.range(less: 5)!
@@ -77,7 +83,7 @@ final class RandomAccessCollectionTest: XCTestCase {
         XCTAssertEqual(test[range], [0, 1, 2, 3, 4])
 
         test = [0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 1, 2, 3, 4, 5, 6, 7, 8]
-        range = test.range(less: 5, range: 5 ..< 18)!
+        range = test.range(less: 5, in: 5 ..< 18)!
         XCTAssertEqual(range, 9 ..< 14)
         XCTAssertEqual(test[range], [0, 1, 2, 3, 4])
 
@@ -87,7 +93,7 @@ final class RandomAccessCollectionTest: XCTestCase {
         XCTAssertEqual(test[range], [4, 3, 2, 1, 0])
 
         test = [8, 7, 6, 5, 4, 3, 2, 1, 0, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8]
-        range = test.range(less: 5, range: 9 ..< 26)!
+        range = test.range(less: 5, in: 9 ..< 26)!
 
         XCTAssertEqual(range, 13 ..< 22)
         XCTAssertEqual(test[range], [4, 3, 2, 1, 0, 1, 2, 3, 4])
@@ -108,6 +114,10 @@ final class RandomAccessCollectionTest: XCTestCase {
         range = test.range(greater: 5)!
         XCTAssertEqual(range, 6 ..< 9)
         XCTAssertEqual(test[range], [6, 7, 8])
+
+        range = test.range(greater: 5, in: 7...)!
+        XCTAssertEqual(range, 7 ..< 9)
+        XCTAssertEqual(test[range], [7, 8])
 
         test = [8, 7, 6, 5, 4, 3, 2, 1, 0, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         range = test.range(greater: 5)!
