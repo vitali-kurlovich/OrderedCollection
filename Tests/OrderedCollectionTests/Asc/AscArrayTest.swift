@@ -44,8 +44,8 @@ final class AscArrayTest: XCTestCase {
         XCTAssertTrue(array.contains(2))
         XCTAssertTrue(array.contains(3))
 
-        XCTAssertTrue(array.contains(4, range: 3 ..< 7))
-        XCTAssertTrue(array.contains(4, range: 2 ..< 5))
+        XCTAssertTrue(array.contains(4, in: 3 ..< 7))
+        XCTAssertTrue(array.contains(4, in: 2 ..< 5))
 
         XCTAssertTrue(array.contains(4))
         XCTAssertTrue(array.contains(5))
@@ -56,7 +56,7 @@ final class AscArrayTest: XCTestCase {
         XCTAssertFalse(array.contains(0))
         XCTAssertFalse(array.contains(9))
 
-        XCTAssertFalse(array.contains(4, range: 4 ..< 7))
+        XCTAssertFalse(array.contains(4, in: 4 ..< 7))
 
         XCTAssertTrue(array.contains(less: 2))
         XCTAssertTrue(array.contains(greater: 2))

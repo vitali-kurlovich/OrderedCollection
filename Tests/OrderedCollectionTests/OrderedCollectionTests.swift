@@ -3,6 +3,8 @@ import XCTest
 
 import OrderedCollection
 
+let FASTTEST = true
+
 final class OrderedCollectionTests: XCTestCase {
     func testAllocationOrderedArray() {
         XCTAssertThrowsError(
@@ -102,6 +104,7 @@ final class OrderedCollectionTests: XCTestCase {
         XCTAssertNil(asc.range(equal: 5))
         XCTAssertNil(desc.range(equal: 5))
 
+        if FASTTEST { return }
         test.reserveCapacity(18 * 3)
         for begin in 0 ..< 18 {
             for value in 0 ..< 18 {
@@ -238,6 +241,7 @@ final class OrderedCollectionTests: XCTestCase {
         XCTAssertNil(asc.range(less: 2))
         XCTAssertNil(desc.range(less: 2))
 
+        if FASTTEST { return }
         test.reserveCapacity(18 * 3)
         for begin in 0 ..< 18 {
             for value in 0 ..< 18 {
@@ -297,6 +301,7 @@ final class OrderedCollectionTests: XCTestCase {
         XCTAssertNil(asc.range(greater: 4))
         XCTAssertNil(desc.range(greater: 4))
 
+        if FASTTEST { return }
         test.reserveCapacity(18 * 3)
         for begin in 0 ..< 18 {
             for value in 0 ..< 18 {

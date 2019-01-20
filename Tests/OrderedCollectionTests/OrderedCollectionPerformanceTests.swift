@@ -13,20 +13,13 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
     func testCondCount() {
         var test = [Int]()
 
-        test.reserveCapacity(512 * 4)
-        test.removeAll()
-        test.append(Int.random(in: 0 ..< 5))
-        test.append(test.last!)
+        test.reserveCapacity(25000 * 3 + 1)
 
-        for _ in 0 ..< 40000 {
-            let rnd = Int.random(in: 0 ..< 3)
-            let last = test.last! + Int.random(in: 1 ..< 6)
-            for _ in 0 ... rnd {
-                test.append(last)
+        for i in 0 ... 25000 {
+            for _ in 1 ... (i % 5 + 1) {
+                test.append(i)
             }
         }
-
-        let ascArray = try! AscArray(test)
 
         var empty = [Int]()
         for index in 1 ... 100 {
@@ -38,7 +31,8 @@ final class OrderedCollectionPerformanceTests: XCTestCase {
 
         let values = Set(test).union(empty)
 
-        print(ascArray.count)
+        let ascArray = try! AscArray(test)
+        print(test.count)
         print(values.count)
 
         measure {
