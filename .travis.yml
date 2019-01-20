@@ -18,13 +18,10 @@ matrix:
         - swift test
 
     - os: osx
-      osx_image: xcode9.3
+      osx_image: xcode10.1
       language: swift
-      sudo: required
-      install:
-        - wget https://swift.org/builds/$SWIFT_BRANCH/xcode/$SWIFT_VERSION/$SWIFT_VERSION-osx.pkg
-        - sudo installer -pkg $SWIFT_VERSION-osx.pkg -target /
-        - export PATH="/Library/Developer/Toolchains/$SWIFT_VERSION.xctoolchain/usr/bin:$PATH"
       script:
         - swift package update
         - swift test
+
+        #https://swift.org/builds/development/ubuntu1604/swift-DEVELOPMENT-SNAPSHOT-2019-01-19-a/swift-DEVELOPMENT-SNAPSHOT-2019-01-19-a-ubuntu16.04.tar.gz
