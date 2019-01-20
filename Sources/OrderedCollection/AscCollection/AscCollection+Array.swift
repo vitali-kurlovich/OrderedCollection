@@ -23,6 +23,13 @@ extension Array where Element: Comparable {
     }
 }
 
+extension Array where Element: Comparable {
+    public
+    func sorted() -> AscArray<Element> {
+        return AscArray<Element>(buffer: sorted())
+    }
+}
+
 extension AscCollection where Buffer == [Element] {
     public
     init<S>(_ sequence: S) throws where Element == S.Element, S: Sequence {

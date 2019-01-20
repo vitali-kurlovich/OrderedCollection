@@ -3,7 +3,7 @@ import XCTest
 
 import OrderedCollection
 
-let FASTTEST = true
+let FASTTEST = false
 
 final class OrderedCollectionTests: XCTestCase {
     func testAllocationOrderedArray() {

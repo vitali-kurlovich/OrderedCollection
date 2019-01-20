@@ -99,6 +99,9 @@ final class AscArrayTest: XCTestCase {
 
         let a = Array(array)
         XCTAssertEqual(a, [1, 2, 3, 4, 5, 6, 7, 8])
+
+        let ascArray = [3, 2, 1, 5, 4, 6, 8, 7].sorted()
+        XCTAssertEqual(array, ascArray)
     }
 
     func testSlice() {
