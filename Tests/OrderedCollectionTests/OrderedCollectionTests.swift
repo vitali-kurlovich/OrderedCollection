@@ -6,6 +6,20 @@ import OrderedCollection
 let FASTTEST = true
 
 final class OrderedCollectionTests: XCTestCase {
+    static var allTests = [
+        ("testAllocationOrderedArray", testAllocationOrderedArray),
+        ("testRangeEqualAsc", testRangeEqualAsc),
+        ("testRangeEqualDesc", testRangeEqualDesc),
+        ("testRangeEqual", testRangeEqual),
+        ("testAscRangeLess", testAscRangeLess),
+
+        ("testDescRangeLess", testDescRangeLess),
+        ("testAscRangeLarge", testAscRangeLarge),
+        ("testDescRangeLarge", testDescRangeLarge),
+        ("testRangeLess", testRangeLess),
+        ("testRangeLarge", testRangeLarge),
+    ]
+
     func testAllocationOrderedArray() {
         XCTAssertThrowsError(
             try AscArray([2, 3, 4, 1])
