@@ -29,63 +29,77 @@ extension BinarySearch {
 private
 extension BinarySearch {
     func leftAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
-        let left = self[leftIndex]
-        let right = self[rightIndex]
+        var leftIndex = leftIndex
+        var rightIndex = rightIndex
 
-        if left == value {
-            return leftIndex
+        while true {
+            let left = self[leftIndex]
+            let right = self[rightIndex]
+
+            if left == value {
+                return leftIndex
+            }
+
+            guard right >= value, left < value else {
+                return nil
+            }
+
+            if right == value, rightIndex - leftIndex <= 1 {
+                return rightIndex
+            }
+
+            guard rightIndex - leftIndex >= 2 else {
+                return nil
+            }
+
+            let midIndex = (leftIndex + rightIndex) / 2
+            let mid = self[midIndex]
+
+            if mid >= value {
+                rightIndex = midIndex
+            } else {
+                leftIndex = midIndex + 1
+            }
         }
-
-        guard right >= value, left < value else {
-            return nil
-        }
-
-        if right == value, rightIndex - leftIndex <= 1 {
-            return rightIndex
-        }
-
-        guard rightIndex - leftIndex >= 2 else {
-            return nil
-        }
-
-        let midIndex = (leftIndex + rightIndex) / 2
-        let mid = self[midIndex]
-
-        if mid >= value {
-            return leftAscRange(equal: value, leftIndex: leftIndex, rightIndex: midIndex)
-        }
-
-        return leftAscRange(equal: value, leftIndex: midIndex + 1, rightIndex: rightIndex)
     }
 
     func rightAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
-        let right = self[rightIndex]
-        let left = self[leftIndex]
+        var leftIndex = leftIndex
+        var rightIndex = rightIndex
 
-        if right == value {
-            return rightIndex
+        while true {
+            let left = self[leftIndex]
+            let right = self[rightIndex]
+
+            if right == value {
+                return rightIndex
+            }
+
+            guard right > value else {
+                return nil
+            }
+
+            if left == value, rightIndex - leftIndex <= 1 {
+                return leftIndex
+            }
+
+            guard rightIndex - leftIndex >= 2 else {
+                return nil
+            }
+
+            guard rightIndex - leftIndex >= 2 else {
+                return nil
+            }
+
+            let midIndex = (leftIndex + rightIndex) / 2
+            let mid = self[midIndex]
+
+            if mid <= value {
+                leftIndex = midIndex
+            } else {
+                rightIndex = midIndex - 1
+            }
         }
-
-        guard right > value else {
-            return nil
-        }
-
-        if left == value, rightIndex - leftIndex <= 1 {
-            return leftIndex
-        }
-
-        guard rightIndex - leftIndex >= 2 else {
-            return nil
-        }
-
-        let midIndex = (leftIndex + rightIndex) / 2
-        let mid = self[midIndex]
-
-        if mid <= value {
-            return rightAscRange(equal: value, leftIndex: midIndex, rightIndex: rightIndex)
-        }
-
-        return rightAscRange(equal: value, leftIndex: leftIndex, rightIndex: (midIndex - 1))
     }
 
     func leftDescRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
