@@ -13,9 +13,6 @@ final class DescArrayMutationAppendTest: XCTestCase {
     func testAppend() {
         var emptyArray = DescArray<Int>()
 
-        emptyArray.reserveCapacity(100)
-        XCTAssertEqual(emptyArray.capacity, 100)
-
         try? emptyArray.append(3)
         try? emptyArray.append(2)
 
