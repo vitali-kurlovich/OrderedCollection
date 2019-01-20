@@ -12,8 +12,6 @@ extension BinarySearch {
     @usableFromInline
     func leftRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element, reverse: Bool) -> Self.Indices.Element? {
         if !reverse {
-//            return binarySearchOneAsc(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
-
             return leftAscRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
         }
         return leftDescRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
