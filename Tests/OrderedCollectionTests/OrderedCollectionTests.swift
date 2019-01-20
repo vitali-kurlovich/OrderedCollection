@@ -17,7 +17,7 @@ final class OrderedCollectionTests: XCTestCase {
         ("testAscRangeLarge", testAscRangeLarge),
         ("testDescRangeLarge", testDescRangeLarge),
         ("testRangeLess", testRangeLess),
-        ("testRangeLarge", testRangeLarge),
+        ("testRangeLarge", testRangeLarge)
     ]
 
     func testAllocationOrderedArray() {
