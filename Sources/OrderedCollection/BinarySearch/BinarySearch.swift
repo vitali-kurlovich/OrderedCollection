@@ -12,12 +12,15 @@ protocol BinarySearch: BidirectionalCollection where Element: Comparable,
     Self.Index: SignedInteger {}
 
 extension BinarySearch {
+    @inlinable
     public
-    func binarySearch(equal: Element, range: Self.Indices? = nil, reverse: Bool = false) -> Self.Indices? {
+    func binarySearch(equal: Element, reverse: Bool = false) -> Self.Indices? {
+        return binarySearch(equal: equal, range: indices, reverse: reverse)
+    }
+
+    public
+    func binarySearch(equal: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
         guard count > 0 else { return nil }
-
-        let range = range != nil ? range! : indices
-
         guard let leftIndex = leftRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!, reverse: reverse) else {
             return nil
         }
@@ -28,11 +31,16 @@ extension BinarySearch {
         return (leftIndex ... rightIndex).relative(to: self) as? Self.Indices
     }
 
+    @inlinable
     public
-    func binarySearch(less: Element, range: Self.Indices? = nil, reverse: Bool = false) -> Self.Indices? {
+    func binarySearch(less: Element, reverse: Bool = false) -> Self.Indices? {
+        return binarySearch(less: less, range: indices, reverse: reverse)
+    }
+
+    public
+    func binarySearch(less: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
         guard count > 0 else { return nil }
 
-        let range = range != nil ? range! : indices
         if range.first == range.last {
             if self[range.first!] < less {
                 return range
@@ -53,11 +61,15 @@ extension BinarySearch {
         return (result.leftIndex ... result.rightIndex).relative(to: self) as? Self.Indices
     }
 
+    @inlinable
     public
-    func binarySearch(greater: Element, range: Self.Indices? = nil, reverse: Bool = false) -> Self.Indices? {
-        guard count > 0 else { return nil }
+    func binarySearch(greater: Element, reverse: Bool = false) -> Self.Indices? {
+        return binarySearch(greater: greater, range: indices, reverse: reverse)
+    }
 
-        let range = range != nil ? range! : indices
+    public
+    func binarySearch(greater: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
+        guard count > 0 else { return nil }
         if range.first == range.last {
             if self[range.last!] > greater {
                 return range

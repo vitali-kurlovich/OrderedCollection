@@ -20,22 +20,55 @@ protocol OrderedCollection: BinarySearch {
 }
 
 public
-extension OrderedCollection {
-    func range(equal: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
+extension OrderedCollection where Self.Indices == Range<Self.Index> {
+    public
+    func range<R>(equal: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
+        return self.range(equal: equal, range: range.relative(to: self))
+    }
+
+    public
+    func range(equal: Self.Element) -> Self.Indices? {
+        return range(equal: equal, range: indices)
+    }
+
+    public
+    func range<R>(less: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
+        return self.range(less: less, range: range.relative(to: self))
+    }
+
+    public
+    func range(less: Self.Element) -> Self.Indices? {
+        return range(less: less, range: indices)
+    }
+
+    public
+    func range<R>(greater: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
+        return self.range(greater: greater, range: range.relative(to: self))
+    }
+
+    public
+    func range(greater: Self.Element) -> Self.Indices? {
+        return range(greater: greater, range: indices)
+    }
+}
+
+private
+extension OrderedCollection where Self.Indices == Range<Self.Index> {
+    func range(equal: Self.Element, range: Range<Self.Index>) -> Self.Indices? {
         return binarySearch(equal: equal, range: range, reverse: !isAscending)
     }
 
-    func range(less: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
+    func range(less: Self.Element, range: Range<Self.Index>) -> Self.Indices? {
         return binarySearch(less: less, range: range, reverse: !isAscending)
     }
 
-    func range(greater: Self.Element, range: Self.Indices? = nil) -> Self.Indices? {
+    func range(greater: Self.Element, range: Range<Self.Index>) -> Self.Indices? {
         return binarySearch(greater: greater, range: range, reverse: !isAscending)
     }
 }
 
 public
-extension OrderedCollection {
+extension OrderedCollection where Self.Indices == Range<Self.Index> {
     /// Returns a Boolean value indicating whether the collection contains the
     /// given element.
     ///
@@ -46,24 +79,28 @@ extension OrderedCollection {
     ///
     /// - Complexity: O(ln(*n*)), where *n* is the length of the collection.
 
-    func contains(_ element: Self.Element, range: Self.Indices? = nil) -> Bool {
-//        if isAscending {
-//            let range = range != nil ? range! : indices
-//            return binarySearchOneAsc(equal: element, leftIndex: range.first! , rightIndex: range.last!) != nil
-//        }
-
-        return binarySearch(equal: element, range: range, reverse: !isAscending) != nil
+    func contains<R>(_ element: Self.Element, in range: R) -> Bool where R: RangeExpression, Index == R.Bound {
+        return binarySearch(equal: element, range: range.relative(to: self), reverse: !isAscending) != nil
     }
 
-    func contains(less: Self.Element, range: Self.Indices? = nil) -> Bool {
-        guard count > 0 else { return false }
-        return binarySearch(less: less, range: range, reverse: !isAscending) != nil
+    func contains(_ element: Self.Element) -> Bool {
+        return binarySearch(equal: element, reverse: !isAscending) != nil
     }
 
-    func contains(greater: Self.Element, range: Self.Indices? = nil) -> Bool {
-        guard count > 0 else { return false }
+    func contains<R>(less: Self.Element, in range: R) -> Bool where R: RangeExpression, Index == R.Bound {
+        return binarySearch(less: less, range: range.relative(to: self), reverse: !isAscending) != nil
+    }
 
-        return binarySearch(greater: greater, range: range, reverse: !isAscending) != nil
+    func contains(less: Self.Element) -> Bool {
+        return binarySearch(less: less, reverse: !isAscending) != nil
+    }
+
+    func contains<R>(greater: Self.Element, in range: R) -> Bool where R: RangeExpression, Index == R.Bound {
+        return binarySearch(greater: greater, range: range.relative(to: self), reverse: !isAscending) != nil
+    }
+
+    func contains(greater: Self.Element) -> Bool {
+        return binarySearch(greater: greater, reverse: !isAscending) != nil
     }
 }
 
@@ -107,7 +144,6 @@ extension OrderedCollection {
 
     @inlinable
     func min() -> Self.Element? {
-        guard count > 0 else { return nil }
         if isAscending {
             return first
         }
@@ -122,7 +158,6 @@ extension OrderedCollection {
     /// - Complexity: O(*1*)
     @inlinable
     func max() -> Self.Element? {
-        guard count > 0 else { return nil }
         if isAscending {
             return last
         }
