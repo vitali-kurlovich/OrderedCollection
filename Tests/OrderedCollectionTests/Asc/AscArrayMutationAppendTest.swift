@@ -13,9 +13,6 @@ final class AscArrayMutationAppendTest: XCTestCase {
     func testAppend() {
         var emptyArray = AscArray<Int>()
 
-        emptyArray.reserveCapacity(100)
-        XCTAssertEqual(emptyArray.capacity, 100)
-
         try? emptyArray.append(2)
         try? emptyArray.append(3)
         XCTAssertThrowsError(try emptyArray.append(2))

@@ -177,10 +177,6 @@ protocol MutationCollectionRemove {
     mutating func popLast() -> Element?
 }
 
-func foof() {
-    var array = [0, 1, 2, 3, 4]
-}
-
 extension Array: MutationCollectionCapacity {}
 extension ArraySlice: MutationCollectionCapacity {}
 
