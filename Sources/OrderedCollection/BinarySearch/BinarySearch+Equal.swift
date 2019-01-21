@@ -16,10 +16,19 @@ extension BinarySearch {
             return nil
         }
 
-        guard let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex, rightIndex: range.last!) else {
-            return nil
+        if leftIndex.left == leftIndex.right {
+            guard leftIndex.left != range.last!, let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex.left + 1, rightIndex: range.last!) else {
+                return (leftIndex.left ... leftIndex.left).relative(to: self) as? Self.Indices
+            }
+
+            return (leftIndex.left ... rightIndex).relative(to: self) as? Self.Indices
+        } else {
+            guard leftIndex.left != leftIndex.right, let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex.left + 1, rightIndex: leftIndex.right) else {
+                return (leftIndex.left ... leftIndex.left).relative(to: self) as? Self.Indices
+            }
+
+            return (leftIndex.left ... rightIndex).relative(to: self) as? Self.Indices
         }
-        return (leftIndex ... rightIndex).relative(to: self) as? Self.Indices
     }
 
     func binarySearchDesc(equal: Element, range: Self.Indices) -> Self.Indices? {
@@ -38,7 +47,7 @@ extension BinarySearch {
 
 private
 extension BinarySearch {
-    func leftAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
+    func leftAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (left: Self.Indices.Element, right: Self.Indices.Element)? {
         var leftIndex = leftIndex
         var rightIndex = rightIndex
 
@@ -47,7 +56,7 @@ extension BinarySearch {
             let right = self[rightIndex]
 
             if left == value {
-                return leftIndex
+                return (left: leftIndex, right: rightIndex)
             }
 
             guard right >= value, left < value else {
@@ -55,7 +64,7 @@ extension BinarySearch {
             }
 
             if right == value, rightIndex - leftIndex <= 1 {
-                return rightIndex
+                return (left: rightIndex, right: rightIndex)
             }
 
             guard rightIndex - leftIndex >= 2 else {
