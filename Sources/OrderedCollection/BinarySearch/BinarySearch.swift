@@ -20,7 +20,7 @@ extension BinarySearch {
 
     public
     func binarySearch(equal: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
-        guard count > 0 else { return nil }
+        guard !isEmpty, !range.isEmpty else { return nil }
         guard let leftIndex = leftRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!, reverse: reverse) else {
             return nil
         }
@@ -39,7 +39,7 @@ extension BinarySearch {
 
     public
     func binarySearch(less: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
-        guard count > 0 else { return nil }
+        guard !isEmpty, !range.isEmpty else { return nil }
 
         if range.first == range.last {
             if self[range.first!] < less {
@@ -69,7 +69,7 @@ extension BinarySearch {
 
     public
     func binarySearch(greater: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
-        guard count > 0 else { return nil }
+        guard !isEmpty, !range.isEmpty else { return nil }
         if range.first == range.last {
             if self[range.last!] > greater {
                 return range
