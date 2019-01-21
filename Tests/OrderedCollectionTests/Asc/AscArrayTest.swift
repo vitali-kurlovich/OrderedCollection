@@ -161,4 +161,11 @@ final class AscArrayTest: XCTestCase {
 
         XCTAssert(byteBuffer == [1, 0, 2, 0, 3, 0])
     }
+
+    func testCodable() {
+        let enc = try! AscArray([1, 2, 3, 4])
+        let data = try! JSONEncoder().encode(enc)
+        let dec = try! JSONDecoder().decode(AscArray<Int>.self, from: data)
+        XCTAssertEqual(enc, dec)
+    }
 }

@@ -150,4 +150,11 @@ final class DescArrayTest: XCTestCase {
 
         XCTAssert(byteBuffer == [3, 0, 2, 0, 1, 0])
     }
+
+    func testCodable() {
+        let enc = try! DescArray([4, 3, 2, 1])
+        let data = try! JSONEncoder().encode(enc)
+        let dec = try! JSONDecoder().decode(DescArray<Int>.self, from: data)
+        XCTAssertEqual(enc, dec)
+    }
 }

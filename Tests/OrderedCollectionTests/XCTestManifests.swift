@@ -35,6 +35,7 @@ extension AscArrayOpTest {
 
 extension AscArrayTest {
     static let __allTests = [
+        ("testCodable", testCodable),
         ("testConstructor", testConstructor),
         ("testContains", testContains),
         ("testEqualable", testEqualable),
@@ -82,6 +83,7 @@ extension DescArrayOpTest {
 
 extension DescArrayTest {
     static let __allTests = [
+        ("testCodable", testCodable),
         ("testConstructor", testConstructor),
         ("testContains", testContains),
         ("testEqualable", testEqualable),
@@ -125,23 +127,23 @@ extension RandomAccessCollectionTest {
 }
 
 #if !os(macOS)
-    public func __allTests() -> [XCTestCaseEntry] {
-        return [
-            testCase(AscArrayMutationAppendTest.__allTests),
-            testCase(AscArrayMutationInsertTest.__allTests),
-            testCase(AscArrayMutationRemoveTest.__allTests),
-            testCase(AscArrayMutationReplaceTest.__allTests),
-            testCase(AscArrayOpTest.__allTests),
-            testCase(AscArrayTest.__allTests),
-            testCase(DescArrayMutationAppendTest.__allTests),
-            testCase(DescArrayMutationInsertTest.__allTests),
-            testCase(DescArrayMutationRemoveTest.__allTests),
-            testCase(DescArrayMutationReplaceTest.__allTests),
-            testCase(DescArrayOpTest.__allTests),
-            testCase(DescArrayTest.__allTests),
-            testCase(OrderedCollectionPerformanceTests.__allTests),
-            testCase(OrderedCollectionTests.__allTests),
-            testCase(RandomAccessCollectionTest.__allTests),
-        ]
-    }
+public func __allTests() -> [XCTestCaseEntry] {
+    return [
+        testCase(AscArrayMutationAppendTest.__allTests),
+        testCase(AscArrayMutationInsertTest.__allTests),
+        testCase(AscArrayMutationRemoveTest.__allTests),
+        testCase(AscArrayMutationReplaceTest.__allTests),
+        testCase(AscArrayOpTest.__allTests),
+        testCase(AscArrayTest.__allTests),
+        testCase(DescArrayMutationAppendTest.__allTests),
+        testCase(DescArrayMutationInsertTest.__allTests),
+        testCase(DescArrayMutationRemoveTest.__allTests),
+        testCase(DescArrayMutationReplaceTest.__allTests),
+        testCase(DescArrayOpTest.__allTests),
+        testCase(DescArrayTest.__allTests),
+        testCase(OrderedCollectionPerformanceTests.__allTests),
+        testCase(OrderedCollectionTests.__allTests),
+        testCase(RandomAccessCollectionTest.__allTests),
+    ]
+}
 #endif
