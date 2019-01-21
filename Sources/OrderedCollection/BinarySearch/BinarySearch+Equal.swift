@@ -16,7 +16,7 @@ extension BinarySearch {
             return nil
         }
 
-        if leftIndex.left == leftIndex.right {
+        if equal == self[leftIndex.right]   {
             guard leftIndex.left != range.last!, let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex.left + 1, rightIndex: range.last!) else {
                 return (leftIndex.left ... leftIndex.left).relative(to: self) as? Self.Indices
             }
