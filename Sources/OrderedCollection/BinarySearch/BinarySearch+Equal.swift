@@ -9,20 +9,30 @@ import Foundation
 
 internal
 extension BinarySearch {
-    @usableFromInline
-    func leftRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element, reverse: Bool) -> Self.Indices.Element? {
-        if !reverse {
-            return leftAscRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
+    func binarySearchAsc(equal: Element, range: Self.Indices) -> Self.Indices? {
+        guard !isEmpty, !range.isEmpty else { return nil }
+
+        guard let leftIndex = leftAscRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!) else {
+            return nil
         }
-        return leftDescRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
+
+        guard let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex, rightIndex: range.last!) else {
+            return nil
+        }
+        return (leftIndex ... rightIndex).relative(to: self) as? Self.Indices
     }
 
-    @usableFromInline
-    func rightRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element, reverse: Bool) -> Self.Indices.Element? {
-        if !reverse {
-            return rightAscRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
+    func binarySearchDesc(equal: Element, range: Self.Indices) -> Self.Indices? {
+        guard !isEmpty, !range.isEmpty else { return nil }
+
+        guard let leftIndex = leftAscRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!) else {
+            return nil
         }
-        return rightDescRange(equal: value, leftIndex: leftIndex, rightIndex: rightIndex)
+
+        guard let rightIndex = rightDescRange(equal: equal, leftIndex: leftIndex, rightIndex: range.last!) else {
+            return nil
+        }
+        return (leftIndex ... rightIndex).relative(to: self) as? Self.Indices
     }
 }
 

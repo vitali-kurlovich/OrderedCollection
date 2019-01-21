@@ -20,15 +20,10 @@ extension BinarySearch {
 
     public
     func binarySearch(equal: Element, range: Self.Indices, reverse: Bool = false) -> Self.Indices? {
-        guard !isEmpty, !range.isEmpty else { return nil }
-        guard let leftIndex = leftRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!, reverse: reverse) else {
-            return nil
+        if reverse {
+            return binarySearchDesc(equal: equal, range: range)
         }
-
-        guard let rightIndex = rightRange(equal: equal, leftIndex: leftIndex, rightIndex: range.last!, reverse: reverse) else {
-            return nil
-        }
-        return (leftIndex ... rightIndex).relative(to: self) as? Self.Indices
+        return binarySearchAsc(equal: equal, range: range)
     }
 
     @inlinable
