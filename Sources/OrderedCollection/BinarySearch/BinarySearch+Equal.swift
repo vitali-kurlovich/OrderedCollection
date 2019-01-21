@@ -25,7 +25,7 @@ extension BinarySearch {
     func binarySearchDesc(equal: Element, range: Self.Indices) -> Self.Indices? {
         guard !isEmpty, !range.isEmpty else { return nil }
 
-        guard let leftIndex = leftAscRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!) else {
+        guard let leftIndex = leftDescRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!) else {
             return nil
         }
 
@@ -91,10 +91,6 @@ extension BinarySearch {
 
             if left == value, rightIndex - leftIndex <= 1 {
                 return leftIndex
-            }
-
-            guard rightIndex - leftIndex >= 2 else {
-                return nil
             }
 
             guard rightIndex - leftIndex >= 2 else {
