@@ -7,49 +7,6 @@
 
 import Foundation
 
-internal
-extension BinarySearch {
-    @inlinable
-    func binarySearchAscContain(_ equal: Element, range: Self.Indices) -> Bool {
-        return leftAscContain(equal, leftIndex:range.first!, rightIndex:range.last!)
-    }
-    
-    @inlinable
-    func leftAscContain(_ value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Bool {
-        var leftIndex = leftIndex
-        var rightIndex = rightIndex
-        
-        while true {
-            let left = self[leftIndex]
-            let right = self[rightIndex]
-            
-            if left == value {
-                return true
-            }
-            
-            guard right >= value, left < value else {
-                return false
-            }
-            
-            if right == value, rightIndex - leftIndex <= 1 {
-                return true
-            }
-            
-            guard rightIndex - leftIndex >= 2 else {
-                return false
-            }
-            
-            let midIndex = (leftIndex + rightIndex) / 2
-            let mid = self[midIndex]
-            
-            if mid >= value {
-                rightIndex = midIndex
-            } else {
-                leftIndex = midIndex + 1
-            }
-        }
-    }
-}
 
 
 internal
@@ -223,5 +180,48 @@ extension BinarySearch {
         }
 
         return rightDescRange(equal: value, leftIndex: leftIndex, rightIndex: midIndex - 1)
+    }
+}
+
+
+internal
+extension BinarySearch {
+    @inlinable
+    func binarySearchAscContain(_ equal: Element, range: Self.Indices) -> Bool {
+        return binarySearchAscContain(equal, leftIndex:range.first!, rightIndex:range.last!)
+    }
+    
+    @inlinable
+    func binarySearchAscContain(_ value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Bool {
+        var leftIndex = leftIndex
+        var rightIndex = rightIndex
+        
+        while leftIndex < rightIndex   {
+            
+            let left = self[leftIndex]
+            let right = self[rightIndex]
+            
+            guard left < value, value < right  else {
+                return false
+            }
+            
+            if left == value || right == value {
+                return true
+            }
+            
+            let midIndex = (leftIndex + rightIndex) / 2
+            let mid = self[midIndex]
+            
+            if mid >= value {
+                rightIndex = midIndex
+            } else {
+                leftIndex = midIndex + 1
+            }
+        }
+        
+        let left = self[leftIndex]
+        let right = self[rightIndex]
+        
+        return left == value || right == value
     }
 }

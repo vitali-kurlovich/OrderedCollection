@@ -80,7 +80,7 @@ extension OrderedCollection where Self.Indices == Range<Self.Index> {
     /// - Complexity: O(ln(*n*)), where *n* is the length of the collection.
 
     func contains<R>(_ element: Self.Element, in range: R) -> Bool where R: RangeExpression, Index == R.Bound {
-        return binarySearch(equal: element, range: range.relative(to: self), reverse: !isAscending) != nil
+        return binarySearchContain(element, range: range.relative(to: self), reverse: !isAscending)
     }
 
     func contains(_ element: Self.Element) -> Bool {
