@@ -11,7 +11,6 @@ public
 protocol BinarySearch: BidirectionalCollection where Element: Comparable,
     Self.Index: SignedInteger {}
 
-
 extension BinarySearch {
     @inlinable
     public
@@ -25,14 +24,13 @@ extension BinarySearch {
         }
         return binarySearchAscContain(equal, range: range)
     }
-    
+
     @inlinable
     public
     func binarySearchContain(_ equal: Element, reverse: Bool = false) -> Bool {
-        return binarySearchContain(equal, range:indices, reverse:reverse)
+        return binarySearchContain(equal, range: indices, reverse: reverse)
     }
 }
-
 
 extension BinarySearch {
     @inlinable

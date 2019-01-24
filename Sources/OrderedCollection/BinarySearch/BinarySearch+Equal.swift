@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 internal
 extension BinarySearch {
     @inlinable
@@ -183,45 +181,42 @@ extension BinarySearch {
     }
 }
 
-
 internal
 extension BinarySearch {
     @inlinable
     func binarySearchAscContain(_ equal: Element, range: Self.Indices) -> Bool {
-        return binarySearchAscContain(equal, leftIndex:range.first!, rightIndex:range.last!)
+        return binarySearchAscContain(equal, leftIndex: range.first!, rightIndex: range.last!)
     }
-    
+
     @inlinable
     func binarySearchAscContain(_ value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Bool {
         var leftIndex = leftIndex
         var rightIndex = rightIndex
-        
-        while leftIndex < rightIndex   {
-            
+
+        while leftIndex < rightIndex {
             let left = self[leftIndex]
             let right = self[rightIndex]
-            
-            guard left < value, value < right  else {
+
+            guard left < value, value < right else {
                 return false
             }
-            
+
             if left == value || right == value {
                 return true
             }
-            
+
             let midIndex = (leftIndex + rightIndex) / 2
             let mid = self[midIndex]
-            
+
             if mid >= value {
                 rightIndex = midIndex
             } else {
                 leftIndex = midIndex + 1
             }
         }
-        
-        let left = self[leftIndex]
+
         let right = self[rightIndex]
-        
-        return left == value || right == value
+
+        return right == value
     }
 }
