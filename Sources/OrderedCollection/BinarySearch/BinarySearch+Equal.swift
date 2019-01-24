@@ -197,21 +197,16 @@ extension BinarySearch {
         var right = self[rightIndex]
 
         while leftIndex < rightIndex, left < value, value < right {
-            if left == value || right == value {
-                return true
-            }
-
             let midIndex = (leftIndex + rightIndex) / 2
             let mid = self[midIndex]
 
             if mid >= value {
                 rightIndex = midIndex
+                right = self[rightIndex]
             } else {
                 leftIndex = midIndex + 1
+                left = self[leftIndex]
             }
-
-            left = self[leftIndex]
-            right = self[rightIndex]
         }
 
         return left == value || right == value
