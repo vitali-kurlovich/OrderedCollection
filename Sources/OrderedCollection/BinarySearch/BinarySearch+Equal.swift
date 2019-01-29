@@ -9,30 +9,28 @@ import Foundation
 
 internal
 extension BinarySearch {
-    @inlinable
     func binarySearchAsc(equal: Element, range: Self.Indices) -> Self.Indices? {
         guard !isEmpty, !range.isEmpty else { return nil }
 
-        guard let leftIndex = leftAscRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!) else {
+        guard let leftRange = leftAscRange(equal: equal, leftIndex: range.first!, rightIndex: range.last!) else {
             return nil
         }
 
-        if equal == self[leftIndex.right] {
-            guard leftIndex.left != range.last!, let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex.left + 1, rightIndex: range.last!) else {
-                return (leftIndex.left ... leftIndex.left).relative(to: self) as? Self.Indices
+        if equal == self[leftRange.right] {
+            guard leftRange.left != range.last!, let rightIndex = rightAscBound(equal: equal, leftIndex: leftRange.left + 1, rightIndex: range.last!) else {
+                return (leftRange.left ... leftRange.left).relative(to: self) as? Self.Indices
             }
 
-            return (leftIndex.left ... rightIndex).relative(to: self) as? Self.Indices
+            return (leftRange.left ... rightIndex).relative(to: self) as? Self.Indices
         } else {
-            guard leftIndex.left != leftIndex.right, let rightIndex = rightAscRange(equal: equal, leftIndex: leftIndex.left + 1, rightIndex: leftIndex.right) else {
-                return (leftIndex.left ... leftIndex.left).relative(to: self) as? Self.Indices
+            guard leftRange.left != leftRange.right, let rightIndex = rightAscBound(equal: equal, leftIndex: leftRange.left + 1, rightIndex: leftRange.right) else {
+                return (leftRange.left ... leftRange.left).relative(to: self) as? Self.Indices
             }
 
-            return (leftIndex.left ... rightIndex).relative(to: self) as? Self.Indices
+            return (leftRange.left ... rightIndex).relative(to: self) as? Self.Indices
         }
     }
 
-    @inlinable
     func binarySearchDesc(equal: Element, range: Self.Indices) -> Self.Indices? {
         guard !isEmpty, !range.isEmpty else { return nil }
 
@@ -47,9 +45,9 @@ extension BinarySearch {
     }
 }
 
-internal
+private
 extension BinarySearch {
-    @inlinable
+    
     func leftAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (left: Self.Indices.Element, right: Self.Indices.Element)? {
         var leftIndex = leftIndex
         var rightIndex = rightIndex
@@ -62,7 +60,7 @@ extension BinarySearch {
                 return (left: leftIndex, right: rightIndex)
             }
 
-            guard right >= value, left < value else {
+            guard left < value, value <= right  else {
                 return nil
             }
 
@@ -85,8 +83,7 @@ extension BinarySearch {
         }
     }
 
-    @inlinable
-    func rightAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
+    func rightAscBound(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
         if self[leftIndex] != value {
             return nil
         }
@@ -116,7 +113,7 @@ extension BinarySearch {
         }
     }
 
-    @inlinable
+    
     func leftDescRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
         let left = self[leftIndex]
         let right = self[rightIndex]
@@ -148,7 +145,6 @@ extension BinarySearch {
         return leftDescRange(equal: value, leftIndex: leftIndex, rightIndex: midIndex)
     }
 
-    @inlinable
     func rightDescRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
         let right = self[rightIndex]
 
@@ -183,12 +179,10 @@ extension BinarySearch {
 
 internal
 extension BinarySearch {
-    @inlinable
     func binarySearchAscContain(_ equal: Element, range: Self.Indices) -> Bool {
         return binarySearchAscContain(equal, leftIndex: range.first!, rightIndex: range.last!)
     }
 
-    @inlinable
     func binarySearchAscContain(_ value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Bool {
         var leftIndex = leftIndex
         var rightIndex = rightIndex
