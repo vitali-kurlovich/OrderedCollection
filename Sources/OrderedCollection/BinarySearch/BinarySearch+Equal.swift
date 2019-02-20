@@ -47,7 +47,6 @@ extension BinarySearch {
 
 private
 extension BinarySearch {
-    
     func leftAscRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> (left: Self.Indices.Element, right: Self.Indices.Element)? {
         var leftIndex = leftIndex
         var rightIndex = rightIndex
@@ -60,7 +59,7 @@ extension BinarySearch {
                 return (left: leftIndex, right: rightIndex)
             }
 
-            guard left < value, value <= right  else {
+            guard left < value, value <= right else {
                 return nil
             }
 
@@ -113,7 +112,6 @@ extension BinarySearch {
         }
     }
 
-    
     func leftDescRange(equal value: Self.Element, leftIndex: Self.Indices.Element, rightIndex: Self.Indices.Element) -> Self.Indices.Element? {
         let left = self[leftIndex]
         let right = self[rightIndex]

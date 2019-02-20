@@ -21,32 +21,26 @@ protocol OrderedCollection: BinarySearch {
 
 public
 extension OrderedCollection where Self.Indices == Range<Self.Index> {
-    public
     func range<R>(equal: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
         return self.range(equal: equal, range: range.relative(to: self))
     }
 
-    public
     func range(equal: Self.Element) -> Self.Indices? {
         return range(equal: equal, range: indices)
     }
 
-    public
     func range<R>(less: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
         return self.range(less: less, range: range.relative(to: self))
     }
 
-    public
     func range(less: Self.Element) -> Self.Indices? {
         return range(less: less, range: indices)
     }
 
-    public
     func range<R>(greater: Self.Element, in range: R) -> Self.Indices? where R: RangeExpression, Index == R.Bound {
         return self.range(greater: greater, range: range.relative(to: self))
     }
 
-    public
     func range(greater: Self.Element) -> Self.Indices? {
         return range(greater: greater, range: indices)
     }
@@ -127,7 +121,7 @@ extension OrderedCollection {
     ///   found in the collection, this method returns `nil`.
     ///
     /// - Complexity: O(*ln(n)*), where *n* is the length of the collection.
-    public func lastIndex(of element: Element) -> Self.Index? {
+    func lastIndex(of element: Element) -> Self.Index? {
         let range = binarySearch(equal: element, reverse: !isAscending)
         return range?.last
     }

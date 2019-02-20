@@ -12,7 +12,6 @@ protocol BinarySearch: BidirectionalCollection where Element: Comparable,
     Self.Index: SignedInteger {}
 
 extension BinarySearch {
-    
     public
     func binarySearchContain(_ equal: Element, range: Self.Indices, reverse: Bool = false) -> Bool {
         guard !isEmpty, !range.isEmpty else {
