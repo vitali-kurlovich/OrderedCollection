@@ -5,8 +5,8 @@
 //  Created by Vitali Kurlovich on 1/19/19.
 //
 
+public
 extension AscCollection {
-    public
     static func + <Other>(lhs: AscCollection, rhs: Other) throws -> AscArray<Element> where Other: Sequence, Element == Other.Element {
         var iterator = rhs.makeIterator()
 
@@ -31,7 +31,6 @@ extension AscCollection {
         return AscArray<Element>(buffer: buffer)
     }
 
-    public
     static func + <Other>(lhs: AscCollection, rhs: Other) throws -> AscArray<Element> where Other: BidirectionalCollection, Element == Other.Element {
         guard let right = rhs.first else {
             return AscArray<Element>(buffer: Array(lhs.buffer))
@@ -53,7 +52,6 @@ extension AscCollection {
         return AscArray<Element>(buffer: buffer)
     }
 
-    public
     static func + (lhs: AscCollection, rhs: AscCollection) throws -> AscArray<Element> {
         guard let right = rhs.first else {
             return AscArray<Element>(buffer: Array(lhs.buffer))
@@ -73,18 +71,16 @@ extension AscCollection {
     }
 }
 
+public
 extension AscCollection where Buffer: MutationCollectionAppend, Buffer: Equatable {
-    public
     static func += <Other>(lhs: inout AscCollection, rhs: Other) throws where Other: Sequence, Element == Other.Element {
         try lhs.append(contentsOf: rhs)
     }
 
-    public
     static func += <Other>(lhs: inout AscCollection, rhs: Other) throws where Other: BidirectionalCollection, Element == Other.Element {
         try lhs.append(contentsOf: rhs)
     }
 
-    public
     static func += (lhs: inout AscCollection, rhs: AscCollection) throws {
         try lhs.append(contentsOf: rhs)
     }

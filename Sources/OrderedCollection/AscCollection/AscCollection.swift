@@ -5,8 +5,6 @@
 //  Created by Vitali Kurlovich on 1/14/19.
 //
 
-import Foundation
-
 public
 struct AscCollection<Element: Comparable, Buffer> where Buffer: RandomAccessCollection, Buffer.Element == Element {
     @usableFromInline
@@ -27,12 +25,13 @@ extension AscCollection: OrderedCollection where Buffer.Index: SignedInteger {
     }
 }
 
+public
 extension AscCollection {
     @inlinable
-    public var isEmpty: Bool { return buffer.isEmpty }
+    var isEmpty: Bool { return buffer.isEmpty }
 
     @inlinable
-    public var count: Int {
+    var count: Int {
         return buffer.count
     }
 }
