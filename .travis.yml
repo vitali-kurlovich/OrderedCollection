@@ -1,6 +1,7 @@
 env:
   global:
     - SWIFT_VERSION=4.2
+    - CODECOV_TOKEN="783e1c34-5bb1-4ab2-a0e9-da55ce878384"
 matrix:
   include:
     - os: linux
@@ -22,3 +23,5 @@ matrix:
       script:
         - swift package update
         - swift test
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
