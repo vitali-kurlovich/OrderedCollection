@@ -32,7 +32,7 @@ extension BinarySearch {
         // 1 2 3 4 5 6 7 8
 
         if mid <= greater {
-            guard let subrange = ascRange(greater: greater, leftIndex: (midIndex + 1), rightIndex: rightIndex) else {
+            guard let subrange = ascRange(greater: greater, leftIndex: midIndex + 1, rightIndex: rightIndex) else {
                 return (leftIndex: rightIndex, rightIndex: rightIndex)
             }
 
@@ -69,7 +69,7 @@ extension BinarySearch {
         let mid = self[midIndex]
 
         if mid <= greater {
-            guard let subrange = descRange(greater: greater, leftIndex: leftIndex, rightIndex: (midIndex - 1)) else {
+            guard let subrange = descRange(greater: greater, leftIndex: leftIndex, rightIndex: midIndex - 1) else {
                 return (leftIndex: leftIndex, rightIndex: leftIndex)
             }
 

@@ -27,13 +27,13 @@ extension DescCollection where Buffer == [Element] {
     public
     init<S>(_ sequence: S) throws where Element == S.Element, S: Sequence {
         _ = try checkDescCollection(sequence)
-        self.init(buffer: Array<Element>(sequence))
+        self.init(buffer: [Element](sequence))
     }
 
     public
     init<S>(_ collection: S) throws where Element == S.Element, S: Collection {
         _ = try checkDescCollection(collection)
-        self.init(buffer: Array<Element>(collection))
+        self.init(buffer: [Element](collection))
     }
 
     public
