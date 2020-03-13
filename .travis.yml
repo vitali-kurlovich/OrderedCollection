@@ -1,6 +1,6 @@
 env:
   global:
-    - SWIFT_VERSION=4.2
+    - SWIFT_VERSION=5.1
     - CODECOV_TOKEN="783e1c34-5bb1-4ab2-a0e9-da55ce878384"
 matrix:
   include:
